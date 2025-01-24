@@ -1,14 +1,15 @@
 import numpy as np
 
-# Back end code
 # Read CSV file
+def readFile():
+    data.csv
 
+# Edit file according to user
+def edit():
 
-# Edit file according to customer
-
-
-# Id Name, Description
-
-
+# Validate data according to user
+def validate():
 
 # Front end code
+def saveData():
+    
