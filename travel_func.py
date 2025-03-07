@@ -14,10 +14,18 @@ def save(data):
 # Adding a new trip
 
 ##Gets every detail of a trip and makes a new trip in our csv file 
-def add_trip(trip_id, destination, start_date, end_date, duration, name, age, gender, nationality,
+def add_trip(destination, start_date, end_date, duration, name, age, gender, nationality,
              accommodation_type, accommodation_cost, transportation_type, transportation_cost):
+    
+    data = load_travel_data()
+
+    if not data.empty:
+         next_trip_id = data['Trip ID'].max() + 1
+    else:
+         next_trip_id = 1
+    
     new_trip = pd.DataFrame([{
-        "Trip ID": trip_id,
+        "Trip ID": next_trip_id,
         "Destination": destination,
         "Start date": start_date,
         "End date": end_date,
@@ -42,22 +50,4 @@ def remove_trip(trip_id):
     data = load_travel_data()
     data = data[data['Trip ID'] != trip_id]  
     save(data)
-
-add_trip(
-        trip_id=200,
-        destination="Paris",
-        start_date="2025-07-15",
-        end_date="2025-07-25",
-        duration=10,
-        name="John Doe",
-        age=30,
-        gender="Male",
-        nationality="Canadian",
-        accommodation_type="Hotel",
-        accommodation_cost=1500,
-        transportation_type="Flight",
-        transportation_cost=800
-    )
-
-    # Example: Removing trip with ID 200
-    # remove_trip(200)
+    
