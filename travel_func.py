@@ -43,9 +43,7 @@ def remove_trip(trip_id):
     data = data[data['Trip ID'] != trip_id]  
     save(data)
 
-if __name__ == "__main__":
- 
-    add_trip(
+add_trip(
         trip_id=200,
         destination="Paris",
         start_date="2025-07-15",
