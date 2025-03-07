@@ -1,0 +1,21 @@
+Iteration 1 Retrospective
+
+What went well?
+	During this iteration, our team significantly improved in terms of planning, communication, and collaboration.
+    We were able to effectively coordinate tasks, streamline our workflow, and maintain clear communication
+    throughout the development process. This resulted in better alignment on project goals, more efficient
+    problem-solving, and a smoother overall experience working together. Our ability to delegate tasks
+    appropriately and provide timely updates contributed to the successful implementation of key features.
+
+What can be improved?
+	One area for improvement is the overall aesthetic and user experience of the GUI. While our current design is
+    functional, we believe it could be refined to achieve a more modern look. Improving layout consistency and 
+    incorporating a cleaner, more polished design would contribute to a better user experience. Going forward,
+    we will focus on refining the interface to ensure that it is not only visually appealing but also user-friendly
+    and professional.
+
+What are some challenges? How do we address them?
+	A major challenge we faced was our initial decision to develop the front-end in Java and the back-end in Python,
+    which created integration difficulties due to our lack of experience in merging the two languages. To address
+    this, we switched the front-end to Python, eliminating compatibility issues and streamlining development. This
+    adjustment helped us recover lost time and ensured a smoother workflow.
