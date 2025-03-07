@@ -4,15 +4,42 @@ Trip ID,Destination,Start date,End date,Duration (days),Traveler name,Traveler a
 3,"Bali, Indonesia",7/1/2023,7/8/2023,7,David Lee,45,Male,Korean,Villa,1000.0,Flight,700.0
 4,"New York, USA",8/15/2023,8/29/2023,14,Sarah Johnson,29,Female,British,Hotel,2000.0,Flight,1000.0
 5,"Tokyo, Japan",9/10/2023,9/17/2023,7,Kim Nguyen,26,Female,Vietnamese,Airbnb,700.0,Train,200.0
-6,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
-7,Doha,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
-8,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
-9,6,Rome,2025-07-16,2025-07-26,10,Jane Smith,28,Female,American,Hostel,800.0,Train,200.0
-10,5,Tokyo,2025-07-17,2025-07-27,10,Akira Tanaka,32,Male,Japanese,Airbnb,1200.0,Flight,900.0
-11,4,Berlin,2025-07-18,2025-07-28,10,Anna Müller,25,Female,German,Hotel,1300.0,Train,300.0
-12,3,Sydney,2025-07-19,2025-07-29,10,Liam Johnson,27,Male,Australian,Hostel,700.0,Flight,950.0
-13,2,Madrid,2025-07-20,2025-07-30,10,Maria González,29,Female,Spanish,Airbnb,1100.0,Train,250.0
-14,1,New York,2025-07-21,2025-07-31,10,David Brown,33,Male,British,Hotel,1600.0,Flight,1000.0
-15,0,Toronto,2025-07-22,2025-08-01,10,Sarah Wilson,31,Female,Canadian,Airbnb,900.0,Train,400.0
-16,9,Dubai,2025-07-23,2025-08-02,10,Ahmed Al-Mansoori,34,Male,Emirati,Hotel,1400.0,Flight,850.0
-17,8,Cape Town,2025-07-24,2025-08-03,10,Nandi Nkosi,26,Female,South African,Hostel,600.0,Train,450.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500.0,Flight,800.0
