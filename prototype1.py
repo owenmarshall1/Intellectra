@@ -23,6 +23,7 @@ def edit_item(id, new_name=None, new_description=None, csv_filename='data.csv'):
             writer = csv.writer(csv_file)
             writer.writerows(updated_rows)
 
+
 # Menu option
 
 def main():

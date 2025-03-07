@@ -4,3 +4,4 @@ Trip ID,Destination,Start date,End date,Duration (days),Traveler name,Traveler a
 3,"Bali, Indonesia",7/1/2023,7/8/2023,7,David Lee,45,Male,Korean,Villa,1000,Flight,700
 4,"New York, USA",8/15/2023,8/29/2023,14,Sarah Johnson,29,Female,British,Hotel,2000,Flight,1000
 5,"Tokyo, Japan",9/10/2023,9/17/2023,7,Kim Nguyen,26,Female,Vietnamese,Airbnb,700,Train,200
+200,Paris,2025-07-15,2025-07-25,10,John Doe,30,Male,Canadian,Hotel,1500,Flight,800
