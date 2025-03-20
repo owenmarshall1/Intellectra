@@ -15,7 +15,7 @@ Trip ID,City,Country,Start date,End date,Duration (days),Accommodation type,Acco
 14,Berlin,Germany,7/1/2024,7/10/2024,9,Hotel,1400.0,Flight,700.0
 15,Marrakech,Morocco,8/20/2024,8/27/2024,7,Riad,600.0,Flight,400.0
 16,Edinburgh,Scotland,9/5/2024,9/12/2024,7,Hotel,900.0,Train,150.0
-17,Paris,France,9/1/2023,9/10/2023,9,Hotel,900.0,Flight,400.0
+17,Nice,France,9/1/2023,9/10/2023,9,Hotel,900.0,Flight,400.0
 18,Bali,Indonesia,8/15/2023,8/25/2023,10,Resort,1500.0,Flight,700.0
 19,London,UK,7/22/2023,7/28/2023,6,Hotel,1200.0,Train,150.0
 20,Tokyo,Japan,10/5/2023,10/15/2023,10,Hotel,1200.0,Flight,800.0

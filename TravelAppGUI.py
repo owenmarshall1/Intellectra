@@ -76,7 +76,7 @@ class TravelApp:
                                                                search_term in item['City'].lower() or
                                                                search_term in item['Country'].lower() or
                                                                search_term in item['Accommodation type'].lower() or
-                                                               search_term in item['Transportation type'])]
+                                                               search_term in item['Transportation type'].lower())]
         self.display_travel_options(filtered_data)
 
     def display_travel_options(self, data):
