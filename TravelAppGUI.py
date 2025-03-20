@@ -176,7 +176,7 @@ class TravelApp:
             return
 
         self.edit_trip_window = tk.Toplevel(self.root)
-        self.edit_trip_window.title("Edit Trip")
+        self.edit_trip_window.title("Edit Trip " + str(trip_id))
         self.edit_trip_window.geometry("320x320")
 
         ttk.Label(self.edit_trip_window, text="City:").grid(row=1, column=0, padx=10, pady=5)
@@ -262,7 +262,7 @@ class TravelApp:
         self.travel_data = self.data_manager.load_travel_data().to_dict("records")
         self.filtered_data = self.travel_data
 
-        self.display_travel_options(self.travel_data)
+        self.display_travel_options(self.filtered_data)
 
 
     def submit_new_trip(self):
@@ -299,7 +299,7 @@ class TravelApp:
         self.travel_data = self.data_manager.load_travel_data().to_dict("records")
         self.filtered_data = self.travel_data
 
-        self.display_travel_options(self.travel_data)
+        self.display_travel_options(self.filtered_data)
 
     def open_remove_trip_window(self):
         self.remove_trip_window = tk.Toplevel(self.root)
@@ -320,7 +320,7 @@ class TravelApp:
             messagebox.showerror("Error", "Please enter a Trip ID!")
             return
 
-        confirm = messagebox.askyesno("Confirm", "Are you sure you want to delete this trip?")
+        confirm = messagebox.askyesno("Confirm", "Are you sure you want to delete this trip? (ID: " + str(trip_id_to_remove) + ")")
         if confirm: 
             self.data_manager.remove_trip(int(trip_id_to_remove))
             
