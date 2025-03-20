@@ -1,7 +1,7 @@
 
 import tkinter as tk
 from tkinter import ttk, messagebox
-from travel_func import TravelDataManager #Importing travel functions
+from TravelDataManager import TravelDataManager #Importing travel functions
 
 class TravelApp:
     def __init__(self, root):

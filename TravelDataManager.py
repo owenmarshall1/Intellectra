@@ -1,7 +1,7 @@
 import pandas as pd
 
 class TravelDataManager:
-    def __init__(self, filename="travel_data_demo.csv"):
+    def __init__(self, filename="travel_data.csv"):
         self.filename = filename
 
     def load_travel_data(self):
