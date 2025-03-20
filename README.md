@@ -44,15 +44,17 @@ To set up and run the Intellectra application locally, follow these steps:
 1. **Clone the Repository:**  
    ```bash
    git clone https://github.com/owenmarshall1/Intellectra
-   cd TravelApp
-   
-2. **Install Dependencies:** <br>
-   Install the required libraries using the requirements.txt file: <br>
-  ```pip install -r requirements.txt```
-
+   cd Intellectra
+2. **Run Build Scripts:** <br>
+   * Windows <br>
+      ```bash
+      build_windows.bat
+   * Unix (Mac/Linux) <br>
+      ```bash
+      build_unix.sh
 3. **Run the Application:** <br>
- ```python TravelAppGUI.py```
-
+    ```bash
+   python TravelAppGUI.py
 4. **Access the Application:** <br>
    The application will launch using tkinter for the graphical interface.
 
