@@ -13,7 +13,7 @@ class TravelApp:
 
          ## Custom style for button
         self.style = ttk.Style()
-        self.style.configure("TButton", foreground="red", font=("Arial", 12))
+        self.style.configure("TButton", font=("Arial", 12))
         self.data_manager = TravelDataManager()
 
         try:
@@ -74,8 +74,6 @@ class TravelApp:
         add_trip_button = ttk.Button(button_frame, text="Add New Trip", command=self.open_add_trip_window)
         add_trip_button.pack(side="left", padx=10)
         #remove button
-        remove_trip_button = ttk.Button(button_frame, text="Remove Trip", command=self.open_remove_trip_window)
-        remove_trip_button.pack(side="left", padx=10)
 
         self.display_travel_options(self.filtered_data)
 
@@ -126,13 +124,14 @@ class TravelApp:
         ttk.Label(details_frame, text=f"{str(item['City']) + ', '+ str(item['Country'])}", font=("Arial", 12)).pack(anchor=tk.W)
         ttk.Label(details_frame, text=f"Duration: {item['Duration (days)']} days", font=("Arial", 10)).pack(anchor=tk.W)
         ttk.Label(details_frame, text=f"Total Cost: ${total_cost}", font=("Arial", 10)).pack(anchor=tk.W)
-
+        delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
+        delete_button.pack(side=tk.RIGHT, padx=15)
         ttk.Button(option_frame, text="View Details", command=lambda tid=item['Trip ID']: self.view_details(tid)).pack(side="right", padx=10)
         ttk.Button(option_frame, text="Edit Trip", command=lambda tid=item['Trip ID']: self.open_edit_trip_window(tid)).pack(side="right", padx=10)
 
-        # Deletion Button
-        delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
-        delete_button.pack(side="right", padx=10)
+        # # Deletion Button
+        # delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
+        # delete_button.pack(side=tk.RIGHT, padx=10)
 
     def confirm_delete_trip(self, trip_id):
         confirm = messagebox.askyesno("Delete Trip", "Are you sure you want to delete this trip? (ID: " + str(trip_id) + ")")
@@ -343,17 +342,17 @@ class TravelApp:
 
         self.display_travel_options(self.filtered_data)
 
-    def open_remove_trip_window(self):
-        self.remove_trip_window = tk.Toplevel(self.root)
-        self.remove_trip_window.title("Remove Trip")
-        self.remove_trip_window.geometry("300x150")
+    # def open_remove_trip_window(self):
+    #     self.remove_trip_window = tk.Toplevel(self.root)
+    #     self.remove_trip_window.title("Remove Trip")
+    #     self.remove_trip_window.geometry("300x150")
 
-        ttk.Label(self.remove_trip_window, text="Enter Trip ID to Remove:").pack(pady=10)
-        self.trip_id_to_remove_entry = ttk.Entry(self.remove_trip_window)
-        self.trip_id_to_remove_entry.pack(pady=5)
+    #     ttk.Label(self.remove_trip_window, text="Enter Trip ID to Remove:").pack(pady=10)
+    #     self.trip_id_to_remove_entry = ttk.Entry(self.remove_trip_window)
+    #     self.trip_id_to_remove_entry.pack(pady=5)
 
-        confirm_button = ttk.Button(self.remove_trip_window, text="Remove Trip", command=self.confirm_remove_trip)
-        confirm_button.pack(pady=10)
+    #     confirm_button = ttk.Button(self.remove_trip_window, text="Remove Trip", command=self.confirm_remove_trip)
+    #     confirm_button.pack(pady=10)
 
     def confirm_remove_trip(self):
         trip_id_to_remove = self.trip_id_to_remove_entry.get()
