@@ -89,6 +89,18 @@ class TravelApp:
                                                                search_term in item['Transportation type'].lower())]
         self.display_travel_options(filtered_data)
 
+    # Used for the test in SearchFeatureTDD.py file
+    def update_search1(self, event=None):
+        search_term = self.search_entry.get().strip().lower()
+        searchable_fields = ["Trip ID", "City", "Country", "Accommodation type", "Transportation type"]
+
+        self.filtered_data = [
+            item for item in self.travel_data
+            if any(search_term in str(item[field]).lower() for field in searchable_fields)
+        ]
+        self.display_travel_options(self.filtered_data)
+
+
     def display_travel_options(self, data):
         for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
@@ -106,7 +118,7 @@ class TravelApp:
 
         details_frame = ttk.Frame(option_frame)
         details_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        ttk.Label(details_frame, text=f"{str(item['City']) + ", "+ str(item['Country'])}", font=("Arial", 12)).pack(anchor=tk.W)
+        ttk.Label(details_frame, text=f"{str(item['City']) + ', '+ str(item['Country'])}", font=("Arial", 12)).pack(anchor=tk.W)
         ttk.Label(details_frame, text=f"Duration: {item['Duration (days)']} days", font=("Arial", 10)).pack(anchor=tk.W)
         ttk.Label(details_frame, text=f"Total Cost: ${total_cost}", font=("Arial", 10)).pack(anchor=tk.W)
 
@@ -122,7 +134,7 @@ class TravelApp:
         total_cost = float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0))
 
         details = (
-            f"Destination: {item['City'] + ", "+ item['Country']}\n"
+            f"Destination: {item['City'] + ', '+ item['Country']}\n"
             f"Start Date: {item['Start date']}\n"
             f"End Date: {item['End date']}\n"
             f"Duration: {item['Duration (days)']} days\n"
