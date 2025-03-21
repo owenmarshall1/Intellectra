@@ -35,7 +35,7 @@ class TravelApp:
         self.search_entry.bind("<KeyRelease>", self.update_search)
 
         # Sorting Dropdown (Combobox)
-        self.sort_options = ["Price: Low to High", "Price: High to Low",
+        self.sort_options = ["ID","Price: Low to High", "Price: High to Low",
                          "Country", "City", "Duration: Short to Long", "Duration: Long to Short"]
     
         self.sort_var = tk.StringVar()
@@ -100,13 +100,13 @@ class TravelApp:
         option_frame = ttk.Frame(self.scrollable_frame)
         option_frame.pack(fill=tk.X, padx=10, pady=5)
 
-        ttk.Label(option_frame, text=f"{item['Trip ID']}", font=("Arial", 12)).pack(side=tk.LEFT, padx=10)
+        ttk.Label(option_frame, text=f"{item['Trip ID']}", font=("Arial", 12), width=3).pack(side=tk.LEFT, padx=10)
 
         total_cost = float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0))
 
         details_frame = ttk.Frame(option_frame)
         details_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        ttk.Label(details_frame, text=f"Destination: {str(item['City']) + ", "+ str(item['Country'])}", font=("Arial", 12)).pack(anchor=tk.W)
+        ttk.Label(details_frame, text=f"{str(item['City']) + ", "+ str(item['Country'])}", font=("Arial", 12)).pack(anchor=tk.W)
         ttk.Label(details_frame, text=f"Duration: {item['Duration (days)']} days", font=("Arial", 10)).pack(anchor=tk.W)
         ttk.Label(details_frame, text=f"Total Cost: ${total_cost}", font=("Arial", 10)).pack(anchor=tk.W)
 
@@ -352,7 +352,9 @@ class TravelApp:
     def sort_data(self, event=None):
         selected_option = self.sort_var.get()
 
-        if selected_option == "Price: Low to High":
+        if selected_option == "ID":
+            self.filtered_data.sort(key=lambda x: x["Trip ID"])
+        elif selected_option == "Price: Low to High":
             self.filtered_data.sort(key=lambda item: float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0)))
         elif selected_option == "Price: High to Low":
             self.filtered_data.sort(key=lambda item: float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0)), reverse=True)
@@ -365,7 +367,8 @@ class TravelApp:
         elif selected_option == "Duration: Long to Short":
             self.filtered_data.sort(key=lambda x: x["Duration (days)"], reverse=True)
 
-        self.display_travel_options(self.filtered_data)  # Refresh the display
+        self.display_travel_options(self.filtered_data) # Refresh the display
+        self.update_search()
 
 
 if __name__ == "__main__":
