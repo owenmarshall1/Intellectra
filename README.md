@@ -14,8 +14,6 @@ This application is designed to help travel agent manage a large catalog of reso
 ## MVP Demo Video 
 Here is the link to the demo video of the MVP: [Link](https://drive.google.com/file/d/1ZWgEtSMm4h5hH63cWXkDrV23LbTu1iWy/view?usp=drive_link)
 
-**Only iterartion 1 is completed!** 
-
 ## Features 
 - **Display Items**: View resorts, hotels, cruise and destinations.
 - **Add Items**: Add new resorts, hotels, cruises and destinations.
