@@ -34,6 +34,16 @@ class TravelApp:
         self.search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
         self.search_entry.bind("<KeyRelease>", self.update_search)
 
+        # Sorting Dropdown (Combobox)
+        self.sort_options = ["Price: Low to High", "Price: High to Low",
+                         "Country", "City", "Duration: Short to Long", "Duration: Long to Short"]
+    
+        self.sort_var = tk.StringVar()
+        self.sort_dropdown = ttk.Combobox(search_frame, textvariable=self.sort_var, values=self.sort_options, state="readonly")
+        self.sort_dropdown.pack(side=tk.RIGHT, padx=5)
+        self.sort_dropdown.set("Sort by...")  # Default text
+        self.sort_dropdown.bind("<<ComboboxSelected>>", self.sort_data)  # Trigger sorting
+
         # added scrollbar !!!
         self.canvas = tk.Canvas(self.root)
         self.scrollbar = ttk.Scrollbar(self.root, orient="vertical", command=self.canvas.yview)
@@ -332,6 +342,30 @@ class TravelApp:
             self.filtered_data = self.travel_data
 
             self.display_travel_options(self.filtered_data)
+
+    def sort_data(self):
+        # Sort the data based on the total cost (Accommodation + Transportation)
+        self.travel_data.sort(key=lambda item: float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0)))
+        # Update the display with sorted data
+        self.display_travel_options(self.travel_data)
+
+    def sort_data(self, event=None):
+        selected_option = self.sort_var.get()
+
+        if selected_option == "Price: Low to High":
+            self.filtered_data.sort(key=lambda item: float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0)))
+        elif selected_option == "Price: High to Low":
+            self.filtered_data.sort(key=lambda item: float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0)), reverse=True)
+        elif selected_option == "Country":
+            self.filtered_data.sort(key=lambda x: x["Country"])
+        elif selected_option == "City":
+            self.filtered_data.sort(key=lambda x: x["City"])
+        elif selected_option == "Duration: Short to Long":
+            self.filtered_data.sort(key=lambda x: x["Duration (days)"])
+        elif selected_option == "Duration: Long to Short":
+            self.filtered_data.sort(key=lambda x: x["Duration (days)"], reverse=True)
+
+        self.display_travel_options(self.filtered_data)  # Refresh the display
 
 
 if __name__ == "__main__":
