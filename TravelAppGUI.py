@@ -11,6 +11,11 @@ class TravelApp:
 
         self.data_manager = TravelDataManager()
 
+         ## Custom style for button
+        self.style = ttk.Style()
+        self.style.configure("TButton", foreground="red", font=("Arial", 12))
+        self.data_manager = TravelDataManager()
+
         try:
             self.travel_data = self.data_manager.load_travel_data().to_dict("records")
         except FileNotFoundError as e:
@@ -124,6 +129,21 @@ class TravelApp:
 
         ttk.Button(option_frame, text="View Details", command=lambda tid=item['Trip ID']: self.view_details(tid)).pack(side="right", padx=10)
         ttk.Button(option_frame, text="Edit Trip", command=lambda tid=item['Trip ID']: self.open_edit_trip_window(tid)).pack(side="right", padx=10)
+
+        # Deletion Button
+        delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
+        delete_button.pack(side="right", padx=10)
+
+    def confirm_delete_trip(self, trip_id):
+        confirm = messagebox.askyesno("Delete Trip", "Are you sure you want to delete this trip? (ID: " + str(trip_id) + ")")
+        if confirm:
+            self.delete_trip(trip_id)
+
+    def delete_trip(self, trip_id):
+        self.travel_data = [trip for trip in self.travel_data if trip['Trip ID'] != trip_id]
+        self.filtered_data = self.travel_data  # update filtered data
+        self.display_travel_options(self.filtered_data)
+        messagebox.showinfo("Success", "Trip deleted successfully!")
 
     def view_details(self, trip_id):
         item = next((trip for trip in self.travel_data if trip['Trip ID'] == trip_id), None)
