@@ -1,51 +1,51 @@
 Trip ID,City,Country,Start date,End date,Duration (days),Accommodation type,Accommodation cost,Transportation type,Transportation cost
-1,London,UK,5/1/2025,5/8/2025,7,Hotel,1200.0,Flight,600.0
-2,Phuket,Thailand,6/15/2025,6/20/2025,5,Resort,800.0,Flight,500.0
-3,Bali,Indonesia,7/1/2025,7/8/2025,7,Villa,1000.0,Flight,700.0
-4,New York,USA,8/15/2025,8/29/2025,14,Hotel,2000.0,Flight,1000.0
-5,Tokyo,Japan,9/10/2025,9/17/2025,7,Airbnb,700.0,Train,200.0
-6,Paris,France,10/5/2025,10/10/2025,5,Hotel,1500.0,Flight,800.0
-7,Sydney,Australia,11/20/2025,11/30/2025,10,Hostel,500.0,Flight,1200.0
-8,Rio de Janeiro,Brazil,1/5/2026,1/12/2026,7,Airbnb,900.0,Flight,600.0
-9,Amsterdam,Netherlands,2/14/2026,2/21/2026,7,Hotel,1200.0,Train,200.0
-10,Dubai,United Arab Emirates,3/10/2026,3/17/2026,7,Resort,2500.0,Flight,800.0
-11,Cancun,Mexico,4/1/2026,4/8/2026,7,Hotel,1000.0,Flight,500.0
-12,Barcelona,Spain,5/15/2026,5/22/2026,7,Airbnb,800.0,Train,100.0
-13,Honolulu,USA,6/10/2026,6/18/2026,8,Resort,3000.0,Flight,1200.0
-14,Berlin,Germany,7/1/2026,7/10/2026,9,Hotel,1400.0,Flight,700.0
-15,Marrakech,Morocco,8/20/2026,8/27/2026,7,Riad,600.0,Flight,400.0
-16,Edinburgh,Scotland,9/5/2026,9/12/2026,7,Hotel,900.0,Train,150.0
-17,Nice,France,9/1/2025,9/10/2025,9,Hotel,900.0,Flight,400.0
-18,Bali,Indonesia,8/15/2025,8/25/2025,10,Resort,1500.0,Flight,700.0
-19,London,UK,7/22/2025,7/28/2025,6,Hotel,1200.0,Train,150.0
-20,Tokyo,Japan,10/5/2025,10/15/2025,10,Hotel,1200.0,Flight,800.0
-21,New York,USA,11/20/2025,11/25/2025,5,Airbnb,600.0,Bus,100.0
-22,Sydney,Australia,12/5/2025,12/12/2025,7,Hotel,1000.0,Flight,600.0
-23,Rome,Italy,11/1/2025,11/8/2025,7,Airbnb,700.0,Train,80.0
-24,Bangkok,Thailand,9/15/2025,9/23/2025,8,Hostel,400.0,Flight,500.0
-25,Paris,France,12/22/2025,12/28/2025,6,Hotel,1400.0,Train,100.0
-26,Hawaii,USA,8/1/2025,8/10/2025,9,Resort,2000.0,Flight,800.0
-27,Barcelona,Spain,10/20/2025,10/28/2025,8,Hotel,1100.0,Train,150.0
-28,Kyoto,Japan,5/10/2025,5/18/2025,8,Hotel,800.0,Flight,500.0
-29,Mumbai,India,6/15/2025,6/22/2025,7,Hostel,200.0,Train,150.0
-30,Nice,France,7/2/2025,7/11/2025,9,Airbnb,600.0,Car rental,300.0
-31,Sydney,Australia,8/20/2025,9/2/2025,13,Hotel,1000.0,Car rental,500.0
-32,Rio de Janeiro,Brazil,9/5/2025,9/14/2025,9,Hostel,150.0,Bus,50.0
-33,Athens,Greece,10/12/2025,10/20/2025,8,Airbnb,400.0,Flight,600.0
-34,Cairo,Egypt,11/8/2025,11/15/2025,7,Hotel,700.0,Train,100.0
-35,Mexico City,Mexico,1/5/2025,1/15/2025,10,Airbnb,500.0,Flight,800.0
-36,Milan,Italy,2/14/2025,2/20/2025,6,Hostel,180.0,Train,120.0
-37,Madrid,Spain,3/23/2025,3/31/2025,8,Hotel,900.0,Car rental,400.0
-38,Banff,Canada,4/19/2025,4/26/2025,7,Airbnb,350.0,Bus,75.0
-39,Paris,France,6/12/2025,6/19/2025,7,Hotel,1400.0,Flight,600.0
-40,Sydney,Australia,1/2/2025,1/9/2025,7,Airbnb,800.0,Train,150.0
-41,Tokyo,Japan,12/10/2025,12/18/2025,8,Hostel,500.0,Flight,900.0
-42,Cancun,Mexico,7/1/2025,7/8/2025,7,Resort,2200.0,Flight,800.0
-43,Rio de Janeiro,Brazil,11/20/2025,11/27/2025,7,Hotel,1200.0,Flight,700.0
-44,London,UK,3/5/2025,3/12/2025,7,Airbnb,900.0,Train,100.0
-45,Barcelona,Spain,8/18/2025,8/25/2025,7,Hostel,600.0,Flight,600.0
-46,New York,USA,9/15/2025,9/22/2025,7,Hotel,1500.0,Flight,500.0
-47,Bangkok,Thailand,5/1/2025,5/7/2025,6,Airbnb,500.0,Bus,50.0
-48,Vancouver,Canada,7/10/2025,7/17/2025,7,Hostel,400.0,Train,150.0
-49,Amsterdam,Netherlands,6/20/2025,6/28/2025,8,Hotel,1100.0,Flight,700.0
-50,Paris,France,8/15/2025,8/22/2025,7,Hotel,1200.0,Train,300.0
+1,London,UK,5/1/2025,5/8/2025,7,Hotel,1500.0,Flight,800.0
+2,Phuket,Thailand,6/15/2025,6/20/2025,5,Resort,900.0,Flight,1000.0
+3,Bali,Indonesia,7/1/2025,7/8/2025,7,Villa,1200.0,Flight,1100.0
+4,New York,USA,8/15/2025,8/29/2025,14,Hotel,2500.0,Flight,1200.0
+5,Tokyo,Japan,9/10/2025,9/17/2025,7,Airbnb,900.0,Train,300.0
+6,Paris,France,10/5/2025,10/10/2025,5,Hotel,1800.0,Flight,1000.0
+7,Sydney,Australia,11/20/2025,11/30/2025,10,Hostel,600.0,Flight,1500.0
+8,Rio de Janeiro,Brazil,1/5/2026,1/12/2026,7,Airbnb,1000.0,Flight,900.0
+9,Amsterdam,Netherlands,2/14/2026,2/21/2026,7,Hotel,1300.0,Train,300.0
+10,Dubai,United Arab Emirates,3/10/2026,3/17/2026,7,Resort,2800.0,Flight,1200.0
+11,Cancun,Mexico,4/1/2026,4/8/2026,7,Hotel,1200.0,Flight,700.0
+12,Barcelona,Spain,5/15/2026,5/22/2026,7,Airbnb,900.0,Train,200.0
+13,Honolulu,USA,6/10/2026,6/18/2026,8,Resort,3500.0,Flight,1500.0
+14,Berlin,Germany,7/1/2026,7/10/2026,9,Hotel,1600.0,Flight,900.0
+15,Marrakech,Morocco,8/20/2026,8/27/2026,7,Riad,800.0,Flight,700.0
+16,Edinburgh,Scotland,9/5/2026,9/12/2026,7,Hotel,1100.0,Train,250.0
+17,Nice,France,9/1/2025,9/10/2025,9,Hotel,1100.0,Flight,600.0
+18,Bali,Indonesia,8/15/2025,8/25/2025,10,Resort,1800.0,Flight,1100.0
+19,London,UK,7/22/2025,7/28/2025,6,Hotel,1400.0,Train,250.0
+20,Tokyo,Japan,10/5/2025,10/15/2025,10,Hotel,1400.0,Flight,1000.0
+21,New York,USA,11/20/2025,11/25/2025,5,Airbnb,800.0,Bus,200.0
+22,Sydney,Australia,12/5/2025,12/12/2025,7,Hotel,1200.0,Flight,800.0
+23,Rome,Italy,11/1/2025,11/8/2025,7,Airbnb,900.0,Train,150.0
+24,Bangkok,Thailand,9/15/2025,9/23/2025,8,Hostel,500.0,Flight,900.0
+25,Paris,France,12/22/2025,12/28/2025,6,Hotel,1600.0,Train,200.0
+26,Hawaii,USA,8/1/2025,8/10/2025,9,Resort,2500.0,Flight,1000.0
+27,Barcelona,Spain,10/20/2025,10/28/2025,8,Hotel,1300.0,Train,250.0
+28,Kyoto,Japan,5/10/2025,5/18/2025,8,Hotel,1000.0,Flight,700.0
+29,Mumbai,India,6/15/2025,6/22/2025,7,Hostel,300.0,Train,250.0
+30,Nice,France,7/2/2025,7/11/2025,9,Airbnb,800.0,Car rental,500.0
+31,Sydney,Australia,8/20/2025,9/2/2025,13,Hotel,1200.0,Car rental,800.0
+32,Rio de Janeiro,Brazil,9/5/2025,9/14/2025,9,Hostel,250.0,Bus,100.0
+33,Athens,Greece,10/12/2025,10/20/2025,8,Airbnb,600.0,Flight,900.0
+34,Cairo,Egypt,11/8/2025,11/15/2025,7,Hotel,900.0,Train,200.0
+35,Mexico City,Mexico,1/5/2025,1/15/2025,10,Airbnb,700.0,Flight,1000.0
+36,Milan,Italy,2/14/2025,2/20/2025,6,Hostel,280.0,Train,250.0
+37,Madrid,Spain,3/23/2025,3/31/2025,8,Hotel,1100.0,Car rental,600.0
+38,Banff,Canada,4/19/2025,4/26/2025,7,Airbnb,500.0,Bus,150.0
+39,Paris,France,6/12/2025,6/19/2025,7,Hotel,1600.0,Flight,800.0
+40,Sydney,Australia,1/2/2025,1/9/2025,7,Airbnb,1000.0,Train,250.0
+41,Tokyo,Japan,12/10/2025,12/18/2025,8,Hostel,700.0,Flight,1100.0
+42,Cancun,Mexico,7/1/2025,7/8/2025,7,Resort,2500.0,Flight,1000.0
+43,Rio de Janeiro,Brazil,11/20/2025,11/27/2025,7,Hotel,1400.0,Flight,900.0
+44,London,UK,3/5/2025,3/12/2025,7,Airbnb,1100.0,Train,200.0
+45,Barcelona,Spain,8/18/2025,8/25/2025,7,Hostel,800.0,Flight,900.0
+46,New York,USA,9/15/2025,9/22/2025,7,Hotel,1800.0,Flight,700.0
+47,Bangkok,Thailand,5/1/2025,5/7/2025,6,Airbnb,700.0,Bus,150.0
+48,Vancouver,Canada,7/10/2025,7/17/2025,7,Hostel,500.0,Train,250.0
+49,Amsterdam,Netherlands,6/20/2025,6/28/2025,8,Hotel,1300.0,Flight,900.0
+50,Paris,France,8/15/2025,8/22/2025,7,Hotel,1400.0,Train,400.0
