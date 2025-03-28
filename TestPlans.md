@@ -25,7 +25,7 @@ Every Test should have two checks before it is dismissed
 
 ## 🔹 Integration Tests
 
-Integration tests verify how components work together (e.g., data manager + UI).
+Integration tests verify how components work together.
 
 ### ✅ List of Planned Integration Tests:
 1. Add a trip via GUI and verify it updates the CSV.✅
