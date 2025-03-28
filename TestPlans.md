@@ -50,7 +50,7 @@ System tests are end-to-end tests simulating user actions and verifying the full
 
 ---
 
-## 🔹 Box Testing Plan
+## Box Testing Plan
 
 ### 🟦 Clear Box Testing (White Box)
 
