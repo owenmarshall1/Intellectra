@@ -11,7 +11,7 @@ Every Test should have two checks before it is dismissed
 2. `remove_trip()` – Removes a trip by ID.✅
 3. `edit_trip()` – Edits a trip and verifies updated values.✅
 4. `load_travel_data()` – Loads data correctly from CSV.✅
-5. `save()` – Saves DataFrame to CSV without altering or losing data.
+5. `save()` – Saves DataFrame to CSV without altering or losing data.✅
 6. `update_search1()` – Filters data based on user input in the search bar.
 7. `add_trip()` adds trip witch correct id.
 8. `remove_trip()` handles a wrong id and doesnt change CSV.✅
@@ -33,7 +33,7 @@ Integration tests verify how components work together (e.g., data manager + UI).
 3. Delete a trip via GUI and verify that the list updates and the CSV is changed.
 4. Search functionality interacts with backend data correctly.✅
 5. Displaying filtered data after search correctly reflects matching results in the UI.
-6. Edit a trip via GUI and ensure data changes.
+6. Edit a trip via GUI and ensure data changes. 
 
 ---
 
@@ -83,11 +83,13 @@ Functional testing based purely on inputs/outputs, from the user’s perspective
 1. Search by city “Paris” returns correct result.
 2. Search by trip ID returns accurate trip data.
 3. Invalid input in search (“asdfgh”) returns zero results.
-4. Invalid edit values 
+4. Invalid edit values
+5. Verify all buttons, labels, and layouts are consistent Check for visual defects and usability issues
+
 ---
 
 ## 👥 Roles for Box Testing
 
-- **Clear Box Testing**: Developers
-- **Translucent Box Testing**: Developers 
-- **Opaque Box Testing**: QA testers
+- **Clear Box Testing**: Owen Arshia 
+- **Translucent Box Testing**: Tara, Chris  
+- **Opaque Box Testing**: Syed 
