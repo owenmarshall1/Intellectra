@@ -66,10 +66,9 @@ Tests based on internal logic and code structure.
 Tests combining knowledge of internal logic and external output, often technical.
 
 #### ✅ Planned Translucent Box Test Cases:
-1. Check CSV integrity after adding/removing.
+1. Check CSV after adding/removing.
 2. Memory/resource handling on repeated `load_travel_data()` calls.
-3. Verify consistent formatting in saved CSV.
-4. Check file is not corrupted after multiple edits and saves.
+3. Check file is not corrupted after multiple edits and saves.
 ---
 
 ### ⬛ Opaque Box Testing (Black Box)
