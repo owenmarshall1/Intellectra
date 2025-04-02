@@ -1,4 +1,4 @@
-
+import csv
 import tkinter as tk
 from tkinter import ttk, messagebox
 from TravelDataManager import TravelDataManager #Importing travel functions
@@ -128,6 +128,15 @@ class TravelApp:
         delete_button.pack(side=tk.RIGHT, padx=15)
         ttk.Button(option_frame, text="View Details", command=lambda tid=item['Trip ID']: self.view_details(tid)).pack(side="right", padx=10)
         ttk.Button(option_frame, text="Edit Trip", command=lambda tid=item['Trip ID']: self.open_edit_trip_window(tid)).pack(side="right", padx=10)
+
+        #determining whether the package is favourited then using the correct button
+        is_favorited = str(item["Favorite"]).strip() == "1"
+        star_symbol = "★" if is_favorited else "☆"
+        star_color = "gold" if is_favorited else "black"
+    
+        fav_button = tk.Button(option_frame,text=star_symbol,font=("Arial", 14),fg=star_color,command=lambda tid=item['Trip ID']: self.toggle_favorite(tid, fav_button))
+        fav_button.pack(side=tk.RIGHT, padx=5)
+
 
         # # Deletion Button
         # delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
@@ -400,6 +409,22 @@ class TravelApp:
 
         self.display_travel_options(self.filtered_data) # Refresh the display
         self.update_search()
+
+    def toggle_favorite(self, trip_id, button):
+        # Get current favorite status from button appearance
+        current_status = button.cget("text") == "★"
+    
+        # Toggle in data manager (pass the opposite of current status)
+        new_status = not current_status
+        success = self.data_manager.toggle_favorite(trip_id, new_status)
+    
+        if success:
+            # Update button appearance
+            button.config(
+                text="★" if new_status else "☆",
+                fg="gold" if new_status else "black"
+            )
+        
 
 
 if __name__ == "__main__":
