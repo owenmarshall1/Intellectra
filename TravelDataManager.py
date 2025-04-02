@@ -10,7 +10,7 @@ class TravelDataManager:
     def save(self, data):
         data.to_csv(self.filename, index=False)
 
-    def add_trip(self, city, country, start_date, end_date, duration, accommodation_type, accommodation_cost, transportation_type, transportation_cost):
+    def add_trip(self, city, country, start_date, end_date, duration, accommodation_type, accommodation_cost, transportation_type, transportation_cost, favorite=0):
         data = self.load_travel_data()
         next_trip_id = data['Trip ID'].max() + 1 if not data.empty else 1
         new_trip = pd.DataFrame([{
@@ -23,7 +23,8 @@ class TravelDataManager:
             "Accommodation type": accommodation_type,
             "Accommodation cost": accommodation_cost,
             "Transportation type": transportation_type,
-            "Transportation cost": transportation_cost
+            "Transportation cost": transportation_cost,
+            "Favorite": favorite
         }])
         data = pd.concat([data, new_trip], ignore_index=True)
         self.save(data)
@@ -47,5 +48,17 @@ class TravelDataManager:
         data.loc[index, 'Accommodation cost'] = accommodation_cost
         data.loc[index, 'Transportation type'] = transportation_type
         data.loc[index, 'Transportation cost'] = transportation_cost
+        self.save(data)
+        return True
+    
+    def toggle_favorite(self, trip_id, new_status):
+        data = self.load_travel_data()
+        index = data[data['Trip ID'] == trip_id].index
+    
+        if len(index) == 0:
+            return False
+    
+        # Simply set to the new status (1 for True, 0 for False)
+        data.loc[index, "Favorite"] = 1 if new_status else 0
         self.save(data)
         return True
