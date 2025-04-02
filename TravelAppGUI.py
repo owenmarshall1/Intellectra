@@ -93,15 +93,15 @@ class TravelApp:
         self.display_travel_options(filtered_data)
 
     # Used for the test in SearchFeatureTDD.py file
-    def update_search1(self, event=None):
-        search_term = self.search_entry.get().strip().lower()
-        searchable_fields = ["Trip ID", "City", "Country", "Accommodation type", "Transportation type"]
+    # def update_search1(self, event=None):
+    #     search_term = self.search_entry.get().strip().lower()
+    #     searchable_fields = ["Trip ID", "City", "Country", "Accommodation type", "Transportation type"]
 
-        self.filtered_data = [
-            item for item in self.travel_data
-            if any(search_term in str(item[field]).lower() for field in searchable_fields)
-        ]
-        self.display_travel_options(self.filtered_data)
+    #     self.filtered_data = [
+    #         item for item in self.travel_data
+    #         if any(search_term in str(item[field]).lower() for field in searchable_fields)
+    #     ]
+    #     self.display_travel_options(self.filtered_data)
 
 
     def display_travel_options(self, data):
