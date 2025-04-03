@@ -61,7 +61,7 @@ class TravelApp:
 
         self.sort_options = [
             "ID", "Price: Low to High", "Price: High to Low",
-            "Country", "City", "Duration: Short to Long", "Duration: Long to Short"
+            "Country", "City", "Duration: Short to Long", "Duration: Long to Short", "Favorites"
         ]
         self.sort_var = tk.StringVar()
         self.sort_dropdown = ttk.Combobox(
@@ -411,6 +411,8 @@ class TravelApp:
             self.filtered_data.sort(key=lambda x: x["Duration (days)"])
         elif selected_option == "Duration: Long to Short":
             self.filtered_data.sort(key=lambda x: x["Duration (days)"], reverse=True)
+        elif selected_option == "Favorites":
+            self.filtered_data = [x for x in self.filtered_data if str(x["Favorite"]) == "1"]
         self.display_travel_options(self.filtered_data)
 
     def toggle_favorite(self, trip_id, container):
