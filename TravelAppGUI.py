@@ -6,15 +6,14 @@ from TravelDataManager import TravelDataManager #Importing travel functions
 class TravelApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Travel Agent App - Demo")
+        self.root.title("🌍 Travel Agent Portal")
         self.root.geometry("800x600")
+        self.root.configure(bg="white")
 
         self.data_manager = TravelDataManager()
 
-         ## Custom style for button
         self.style = ttk.Style()
-        self.style.configure("TButton", font=("Arial", 12))
-        self.data_manager = TravelDataManager()
+        self.setup_styles()
 
         try:
             self.travel_data = self.data_manager.load_travel_data().to_dict("records")
@@ -22,62 +21,79 @@ class TravelApp:
             messagebox.showerror("File Error", str(e))
             root.destroy()
             return
-        
+
         self.filtered_data = self.travel_data
+        self.search_debounce_id = None
 
         self.create_widgets()
 
-        self.search_debounce_id = None
+    def setup_styles(self):
+        self.style.theme_use("clam")
+        self.style.configure("TFrame", background="white")
+        self.style.configure("TopBar.TFrame", background="#0078D4")
+        self.style.configure("TLabel", background="white", font=("Segoe UI", 9))
+        self.style.configure("TButton", font=("Segoe UI", 9), padding=4)
+        self.style.configure("Accent.TButton", foreground="white", background="#0078D4")
+        self.style.map("Accent.TButton", background=[("active", "#005A9E")])
+        self.style.configure("Delete.TButton", foreground="white", background="#D32F2F", padding=1, width=2)
+        self.style.map("Delete.TButton", background=[("active", "#B71C1C")])
+        self.style.configure("Login.TButton", foreground="#0078D4", background="white", padding=4, font=("Segoe UI", 9, "bold"))
+        self.style.map("Login.TButton", background=[("active", "#f0f0f0")])
 
     def create_widgets(self):
-        # search bar
-        search_frame = ttk.Frame(self.root)
-        search_frame.pack(fill=tk.X, padx=10, pady=10)
+        # Company name banner
+        company_frame = tk.Frame(self.root, bg="white")
+        company_frame.pack(fill=tk.X, pady=(8, 0))
 
-        ttk.Label(search_frame, text="Search:").pack(side=tk.LEFT, padx=5)
+        company_label = tk.Label(company_frame, text="Intellectra", font=("Copperplate Gothic Bold", 18), fg="#003366", bg="white")
+        company_label.pack(side=tk.LEFT, padx=12, anchor="w")
+
+        # Search bar frame
+        search_frame = ttk.Frame(self.root, style="TopBar.TFrame")
+        search_frame.pack(fill=tk.X, padx=0, pady=0)
+
+        search_label = tk.Label(search_frame, text="🔍 Search Destinations:", bg="#0078D4", fg="white", font=("Segoe UI", 10))
+        search_label.pack(side=tk.LEFT, padx=5, pady=10)
+
         self.search_entry = ttk.Entry(search_frame)
         self.search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
         self.search_entry.bind("<KeyRelease>", self.update_search)
 
-        # Sorting Dropdown (Combobox)
-        self.sort_options = ["ID","Price: Low to High", "Price: High to Low",
-                         "Country", "City", "Duration: Short to Long", "Duration: Long to Short"]
-    
+        self.sort_options = [
+            "ID", "Price: Low to High", "Price: High to Low",
+            "Country", "City", "Duration: Short to Long", "Duration: Long to Short"
+        ]
         self.sort_var = tk.StringVar()
-        self.sort_dropdown = ttk.Combobox(search_frame, textvariable=self.sort_var, values=self.sort_options, state="readonly")
-        self.sort_dropdown.pack(side=tk.RIGHT, padx=5)
-        self.sort_dropdown.set("Sort by...")  # Default text
-        self.sort_dropdown.bind("<<ComboboxSelected>>", self.sort_data)  # Trigger sorting
+        self.sort_dropdown = ttk.Combobox(
+            search_frame, textvariable=self.sort_var, values=self.sort_options, state="readonly", width=20)
+        self.sort_dropdown.pack(side=tk.LEFT, padx=5)
+        self.sort_dropdown.set("Sort by...")
+        self.sort_dropdown.bind("<<ComboboxSelected>>", self.sort_data)
 
-        # added scrollbar !!!
-        self.canvas = tk.Canvas(self.root)
+        login_btn = ttk.Button(search_frame, text="Login", style="Login.TButton")
+        login_btn.pack(side=tk.RIGHT, padx=10)
+
+        self.canvas = tk.Canvas(self.root, bg="white", highlightthickness=0)
         self.scrollbar = ttk.Scrollbar(self.root, orient="vertical", command=self.canvas.yview)
         self.scrollable_frame = ttk.Frame(self.canvas)
-        
-        self.scrollable_frame.bind(
-            "<Configure>",
-            lambda e: self.canvas.configure(
-                scrollregion=self.canvas.bbox("all")
-            )
-        )
 
-        self.canvas.create_window((0,0), window=self.scrollable_frame, anchor="nw")
+        self.scrollable_frame.bind(
+            "<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
 
         self.canvas.pack(side="left", fill="both", expand=True)
         self.scrollbar.pack(side="right", fill="y")
 
         button_frame = ttk.Frame(self.root)
-        button_frame.pack(side="bottom", pady=10)
+        button_frame.pack(side="bottom", pady=8)
 
-        #add button
-        add_trip_button = ttk.Button(button_frame, text="Add New Trip", command=self.open_add_trip_window)
-        add_trip_button.pack(side="left", padx=10)
-        #remove button
+        add_trip_button = ttk.Button(button_frame, text="➕ Add New Trip", style="Accent.TButton", command=self.open_add_trip_window)
+        add_trip_button.pack(side="right", padx=12)
 
         self.display_travel_options(self.filtered_data)
 
-    #update search method when key is pressed
     def debounce_search(self, event=None):
         if self.search_debounce_id:
             self.root.after_cancel(self.search_debounce_id)
@@ -85,71 +101,60 @@ class TravelApp:
 
     def update_search(self, event=None):
         search_term = self.search_entry.get().lower()
-        filtered_data = [item for item in self.travel_data if (search_term in str(item['Trip ID']).lower() or 
-                                                               search_term in item['City'].lower() or
-                                                               search_term in item['Country'].lower() or
-                                                               search_term in item['Accommodation type'].lower() or
-                                                               search_term in item['Transportation type'].lower())]
-        self.display_travel_options(filtered_data)
-
-    # Used for the test in SearchFeatureTDD.py file
-    # def update_search1(self, event=None):
-    #     search_term = self.search_entry.get().strip().lower()
-    #     searchable_fields = ["Trip ID", "City", "Country", "Accommodation type", "Transportation type"]
-
-    #     self.filtered_data = [
-    #         item for item in self.travel_data
-    #         if any(search_term in str(item[field]).lower() for field in searchable_fields)
-    #     ]
-    #     self.display_travel_options(self.filtered_data)
-
+        self.filtered_data = [item for item in self.travel_data if
+            search_term in str(item['Trip ID']).lower() or
+            search_term in item['City'].lower() or
+            search_term in item['Country'].lower() or
+            search_term in item['Accommodation type'].lower() or
+            search_term in item['Transportation type'].lower()
+        ]
+        self.display_travel_options(self.filtered_data)
 
     def display_travel_options(self, data):
         for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
-
         for idx, item in enumerate(data):
             self.display_travel_option(idx, item)
 
     def display_travel_option(self, idx, item):
-        option_frame = ttk.Frame(self.scrollable_frame)
-        option_frame.pack(fill=tk.X, padx=10, pady=5)
+        outer = tk.Frame(self.scrollable_frame, bg="white")
+        outer.pack(fill=tk.X, padx=8, pady=6)
 
-        ttk.Label(option_frame, text=f"{item['Trip ID']}", font=("Arial", 12), width=3).pack(side=tk.LEFT, padx=10)
+        card = tk.Frame(outer, bg="white", bd=1, relief="solid")
+        card.pack(fill=tk.X, ipadx=6, ipady=6)
 
-        total_cost = float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0))
+        left = ttk.Frame(card)
+        left.pack(side="left", padx=10)
 
-        details_frame = ttk.Frame(option_frame)
-        details_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        ttk.Label(details_frame, text=f"{str(item['City']) + ', '+ str(item['Country'])}", font=("Arial", 12)).pack(anchor=tk.W)
-        ttk.Label(details_frame, text=f"Duration: {item['Duration (days)']} days", font=("Arial", 10)).pack(anchor=tk.W)
-        ttk.Label(details_frame, text=f"Total Cost: ${total_cost}", font=("Arial", 10)).pack(anchor=tk.W)
-        delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
-        delete_button.pack(side=tk.RIGHT, padx=15)
-        ttk.Button(option_frame, text="View Details", command=lambda tid=item['Trip ID']: self.view_details(tid)).pack(side="right", padx=10)
-        ttk.Button(option_frame, text="Edit Trip", command=lambda tid=item['Trip ID']: self.open_edit_trip_window(tid)).pack(side="right", padx=10)
+        details = f"{item['City']}, {item['Country']}\n"
+        details += f"Duration: {item['Duration (days)']} days\n"
+        total_cost = float(item['Accommodation cost']) + float(item['Transportation cost'])
+        details += f"Total Cost: ${total_cost:.2f}"
 
-        #determining whether the package is favourited then using the correct button
-        is_favorited = str(item["Favorite"]).strip() == "1"
-        star_symbol = "★" if is_favorited else "☆"
-        star_color = "gold" if is_favorited else "black"
-    
-        fav_button = tk.Button(option_frame,text=star_symbol,font=("Arial", 14),fg=star_color,command=lambda tid=item['Trip ID']: self.toggle_favorite(tid, fav_button))
-        fav_button.pack(side=tk.RIGHT, padx=5)
+        ttk.Label(left, text=f"#{item['Trip ID']}", font=("Segoe UI", 9, "bold"), foreground="#0078D4").pack(anchor="w")
+        ttk.Label(left, text=details, justify="left").pack(anchor="w")
 
+        right = ttk.Frame(card, style="TFrame")
+        right.pack(side="right", padx=6)
 
-        # # Deletion Button
-        # delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
-        # delete_button.pack(side=tk.RIGHT, padx=10)
+        fav_btn = tk.Button(right, text="★" if item['Favorite'] == 1 else "☆",
+                            fg="gold" if item['Favorite'] == 1 else "gray",
+                            font=("Segoe UI", 11), bd=0, bg="white", activebackground="white",
+                            command=lambda tid=item['Trip ID'], b=right: self.toggle_favorite(tid, b))
+        fav_btn.pack(side="left", padx=3)
+
+        ttk.Button(right, text="✏️ Edit", command=lambda tid=item['Trip ID']: self.open_edit_trip_window(tid)).pack(side="left", padx=2)
+        ttk.Button(right, text="🔍 View", command=lambda tid=item['Trip ID']: self.view_details(tid)).pack(side="left", padx=2)
+        ttk.Button(right, text="❌", style="Delete.TButton", width=3, command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid)).pack(side="left", padx=2)
 
     def confirm_delete_trip(self, trip_id):
-        confirm = messagebox.askyesno("Delete Trip", "Are you sure you want to delete this trip? (ID: " + str(trip_id) + ")")
+        confirm = messagebox.askyesno("Delete Trip", f"Are you sure you want to delete this trip? (ID: {trip_id})")
         if confirm:
             self.delete_trip(trip_id)
 
     def delete_trip(self, trip_id):
         self.travel_data = [trip for trip in self.travel_data if trip['Trip ID'] != trip_id]
-        self.filtered_data = self.travel_data  # update filtered data
+        self.filtered_data = self.travel_data
         self.display_travel_options(self.filtered_data)
         messagebox.showinfo("Success", "Trip deleted successfully!")
 
@@ -162,7 +167,7 @@ class TravelApp:
         total_cost = float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0))
 
         details = (
-            f"Destination: {item['City'] + ', '+ item['Country']}\n"
+            f"Destination: {item['City']}, {item['Country']}\n"
             f"Start Date: {item['Start date']}\n"
             f"End Date: {item['End date']}\n"
             f"Duration: {item['Duration (days)']} days\n"
@@ -170,10 +175,10 @@ class TravelApp:
             f"Accommodation Cost: ${item['Accommodation cost']}\n"
             f"Transportation Type: {item['Transportation type']}\n"
             f"Transportation Cost: ${item['Transportation cost']}\n"
-            f"Total Cost: ${total_cost}"
+            f"Total Cost: ${total_cost:.2f}"
         )
-
         messagebox.showinfo("Travel Details", details)
+
     # opens a new window to add a trip
     def open_add_trip_window(self):
         self.add_trip_window = tk.Toplevel(self.root)
@@ -390,14 +395,14 @@ class TravelApp:
         self.display_travel_options(self.travel_data)
 
     def sort_data(self, event=None):
-        selected_option = self.sort_var.get()
 
+        selected_option = self.sort_var.get()
         if selected_option == "ID":
             self.filtered_data.sort(key=lambda x: x["Trip ID"])
         elif selected_option == "Price: Low to High":
-            self.filtered_data.sort(key=lambda item: float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0)))
+            self.filtered_data.sort(key=lambda x: float(x["Accommodation cost"]) + float(x["Transportation cost"]))
         elif selected_option == "Price: High to Low":
-            self.filtered_data.sort(key=lambda item: float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0)), reverse=True)
+            self.filtered_data.sort(key=lambda x: float(x["Accommodation cost"]) + float(x["Transportation cost"]), reverse=True)
         elif selected_option == "Country":
             self.filtered_data.sort(key=lambda x: x["Country"])
         elif selected_option == "City":
@@ -406,24 +411,14 @@ class TravelApp:
             self.filtered_data.sort(key=lambda x: x["Duration (days)"])
         elif selected_option == "Duration: Long to Short":
             self.filtered_data.sort(key=lambda x: x["Duration (days)"], reverse=True)
+        self.display_travel_options(self.filtered_data)
 
-        self.display_travel_options(self.filtered_data) # Refresh the display
-        self.update_search()
-
-    def toggle_favorite(self, trip_id, button):
-        # Get current favorite status from button appearance
-        current_status = button.cget("text") == "★"
-    
-        # Toggle in data manager (pass the opposite of current status)
-        new_status = not current_status
-        success = self.data_manager.toggle_favorite(trip_id, new_status)
-    
-        if success:
-            # Update button appearance
-            button.config(
-                text="★" if new_status else "☆",
-                fg="gold" if new_status else "black"
-            )
+    def toggle_favorite(self, trip_id, container):
+        current_btn = container.winfo_children()[0]
+        is_fav = current_btn.cget("text") == "★"
+        new_status = not is_fav
+        if self.data_manager.toggle_favorite(trip_id, new_status):
+            current_btn.config(text="★" if new_status else "☆", fg="gold" if new_status else "gray")
         
 
 
