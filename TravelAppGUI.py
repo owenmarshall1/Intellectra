@@ -10,10 +10,8 @@ class TravelApp:
         self.root = root
         self.root.title("🌍 Travel Agent Portal")
         self.root.geometry("800x600")
-
+        self.root.configure(bg="white")
         self.data_manager = TravelDataManager()
-
-         ## Custom style for button
         self.style = ttk.Style()
         self.setup_styles()
 
@@ -66,13 +64,16 @@ class TravelApp:
             "Country", "City", "Duration: Short to Long", "Duration: Long to Short", "Favorites"
         ]
         self.sort_var = tk.StringVar()
-        self.sort_dropdown = ttk.Combobox(search_frame, textvariable=self.sort_var, values=self.sort_options, state="readonly")
-        self.sort_dropdown.pack(side=tk.RIGHT, padx=5)
-        self.sort_dropdown.set("Sort by...")  # Default text
-        self.sort_dropdown.bind("<<ComboboxSelected>>", self.sort_data)  # Trigger sorting
+        self.sort_dropdown = ttk.Combobox(
+            search_frame, textvariable=self.sort_var, values=self.sort_options, state="readonly", width=20)
+        self.sort_dropdown.pack(side=tk.LEFT, padx=5)
+        self.sort_dropdown.set("Sort by...")
+        self.sort_dropdown.bind("<<ComboboxSelected>>", self.sort_data)
 
-        # added scrollbar !!!
-        self.canvas = tk.Canvas(self.root)
+        login_btn = ttk.Button(search_frame, text="Login", style="Login.TButton", command=self.show_login_popup)
+        login_btn.pack(side=tk.RIGHT, padx=10)
+
+        self.canvas = tk.Canvas(self.root, bg="white", highlightthickness=0)
         self.scrollbar = ttk.Scrollbar(self.root, orient="vertical", command=self.canvas.yview)
         self.scrollable_frame = ttk.Frame(self.canvas)
 
@@ -86,16 +87,82 @@ class TravelApp:
         self.scrollbar.pack(side="right", fill="y")
 
         button_frame = ttk.Frame(self.root)
-        button_frame.pack(side="bottom", pady=10)
+        button_frame.pack(side="bottom", pady=8)
 
-        #add button
-        add_trip_button = ttk.Button(button_frame, text="Add New Trip", command=self.open_add_trip_window)
-        add_trip_button.pack(side="left", padx=10)
-        #remove button
+        add_trip_button = ttk.Button(button_frame, text="➕ Add New Trip", style="Accent.TButton", command=self.open_add_trip_window)
+        add_trip_button.pack(side="right", padx=12)
 
         self.display_travel_options(self.filtered_data)
 
-    #update search method when key is pressed
+    def show_login_popup(self):
+        
+        if self.auth.get_login_status():
+            self.auth.logout()
+            self.update_ui_for_admin_status()
+            messagebox.showinfo("Logged Out!", "Admin mode has been deactivated")
+            return
+        
+        self.login_popup = tk.Toplevel(self.root)
+        self.login_popup.title("Admin Login")
+        self.login_popup.geometry("300x200")
+        self.login_popup.resizable(False, False)
+        
+        window_width = 300 # Center the popup
+        window_height = 200 # Center the popup
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        x = (screen_width // 2) - (window_width // 2)
+        y = (screen_height // 2) - (window_height // 2)
+        self.login_popup.geometry(f"{window_width}x{window_height}+{x}+{y}")
+        
+        
+        ttk.Label(self.login_popup, text="Enter Admin Password:").pack(pady=(10, 0)) # Password label and entry
+        
+        self.password_frame = ttk.Frame(self.login_popup)
+        self.password_frame.pack(pady=5)
+        self.password_var = tk.StringVar()
+        self.password_entry = ttk.Entry(self.password_frame, show="*", textvariable=self.password_var, width=20) # Hidden password with *
+        self.password_entry.pack(side=tk.LEFT)
+        
+        self.show_pass_btn = ttk.Button(self.password_frame, text="🔓", width=3,command=self.toggle_password_visibility) # Show password button
+        self.show_pass_btn.pack(side=tk.LEFT, padx=5)
+        login_btn = ttk.Button(self.login_popup, text="Login", command=self.attempt_login) # Login button
+        login_btn.pack(pady=10)
+        
+        self.login_popup.bind('<Return>', lambda e: self.attempt_login())
+        self.password_entry.focus() # Focus on password entry
+
+    
+    def toggle_password_visibility(self): # Show/Hide password
+        if self.password_entry['show'] == "":
+            self.password_entry.config(show="*")
+            self.show_pass_btn.config(text="🔓")
+        else:
+            self.password_entry.config(show="")
+            self.show_pass_btn.config(text="🔒")
+
+    def attempt_login(self):
+        password = self.password_var.get()
+        if self.auth.login(password):
+            self.login_popup.destroy()
+            self.update_ui_for_admin_status()
+            messagebox.showinfo("Success!", "Admin mode logged in!")
+        else:
+            messagebox.showerror("Error!", "Password is incorrect!")
+            self.password_var.set("")
+            self.password_entry.focus()
+
+    def update_ui_for_admin_status(self):
+        is_admin = self.auth.get_login_status()
+        self.display_travel_options(self.filtered_data)
+        
+        # Show/hide "Add New Trip" button (might remove this in the future)
+        for widget in self.root.winfo_children():
+            if isinstance(widget, ttk.Frame):
+                for child in widget.winfo_children():
+                    if isinstance(child, ttk.Button) and "Add New Trip" in child['text']:
+                        child.pack() if is_admin else child.pack_forget()
+
     def debounce_search(self, event=None):
         if self.search_debounce_id:
             self.root.after_cancel(self.search_debounce_id)
@@ -119,38 +186,48 @@ class TravelApp:
             self.display_travel_option(idx, item)
 
     def display_travel_option(self, idx, item):
-        option_frame = ttk.Frame(self.scrollable_frame)
-        option_frame.pack(fill=tk.X, padx=10, pady=5)
+        outer = tk.Frame(self.scrollable_frame, bg="white")
+        outer.pack(fill=tk.X, padx=8, pady=6)
 
-        ttk.Label(option_frame, text=f"{item['Trip ID']}", font=("Arial", 12), width=3).pack(side=tk.LEFT, padx=10)
+        card = tk.Frame(outer, bg="white", bd=1, relief="solid")
+        card.pack(fill=tk.X, ipadx=6, ipady=6)
 
-        total_cost = float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0))
+        left = ttk.Frame(card)
+        left.pack(side="left", padx=10)
 
-        details_frame = ttk.Frame(option_frame)
-        details_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        ttk.Label(details_frame, text=f"{str(item['City']) + ', '+ str(item['Country'])}", font=("Arial", 12)).pack(anchor=tk.W)
-        ttk.Label(details_frame, text=f"Duration: {item['Duration (days)']} days", font=("Arial", 10)).pack(anchor=tk.W)
-        ttk.Label(details_frame, text=f"Total Cost: ${total_cost}", font=("Arial", 10)).pack(anchor=tk.W)
-        delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
-        delete_button.pack(side=tk.RIGHT, padx=15)
-        ttk.Button(option_frame, text="View Details", command=lambda tid=item['Trip ID']: self.view_details(tid)).pack(side="right", padx=10)
-        ttk.Button(option_frame, text="Edit Trip", command=lambda tid=item['Trip ID']: self.open_edit_trip_window(tid)).pack(side="right", padx=10)
+        details = f"{item['City']}, {item['Country']}\n"
+        details += f"Duration: {item['Duration (days)']} days\n"
+        total_cost = float(item['Accommodation cost']) + float(item['Transportation cost'])
+        details += f"Total Cost: ${total_cost:.2f}"
 
-        #determining whether the package is favourited then using the correct button
-        is_favorited = str(item["Favorite"]).strip() == "1"
-        star_symbol = "★" if is_favorited else "☆"
-        star_color = "gold" if is_favorited else "black"
-    
-        fav_button = tk.Button(option_frame,text=star_symbol,font=("Arial", 14),fg=star_color,command=lambda tid=item['Trip ID']: self.toggle_favorite(tid, fav_button))
-        fav_button.pack(side=tk.RIGHT, padx=5)
+        ttk.Label(left, text=f"#{item['Trip ID']}", font=("Segoe UI", 9, "bold"), foreground="#0078D4").pack(anchor="w")
+        ttk.Label(left, text=details, justify="left").pack(anchor="w")
 
+        right = ttk.Frame(card, style="TFrame")
+        right.pack(side="right", padx=6)
 
-        # # Deletion Button
-        # delete_button = tk.Button(option_frame, text="❌", fg="white", bg="red", font=("Arial", 12, "bold"), command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid))
-        # delete_button.pack(side=tk.RIGHT, padx=10)
+        # Favorite button (always visible)
+        fav_btn = tk.Button(right, text="★" if item['Favorite'] == 1 else "☆",
+                            fg="gold" if item['Favorite'] == 1 else "gray",
+                            font=("Segoe UI", 11), bd=0, bg="white", activebackground="white",
+                            command=lambda tid=item['Trip ID'], b=right: self.toggle_favorite(tid, b))
+        fav_btn.pack(side="left", padx=3)
+
+        # View button (always visible)
+        ttk.Button(right, text="🔍 View", command=lambda tid=item['Trip ID']: self.view_details(tid)).pack(side="left", padx=2)
+
+        # Admin-only buttons (visible when logged in)
+        if self.auth.get_login_status():
+            ttk.Button(right, text="✏️ Edit", command=lambda tid=item['Trip ID']: self.open_edit_trip_window(tid)).pack(side="left", padx=2)
+            ttk.Button(right, text="❌", style="Delete.TButton", width=3, command=lambda tid=item['Trip ID']: self.confirm_delete_trip(tid)).pack(side="left", padx=2)
 
     def confirm_delete_trip(self, trip_id):
-        confirm = messagebox.askyesno("Delete Trip", "Are you sure you want to delete this trip? (ID: " + str(trip_id) + ")")
+
+        if not self.auth.get_login_status():
+            messagebox.showerror("Access Denied", "Not admin user!")
+            return
+        
+        confirm = messagebox.askyesno("Delete Trip", f"Are you sure you want to delete this trip? (ID: {trip_id})")
         if confirm:
             self.delete_trip(trip_id)
 
@@ -180,8 +257,12 @@ class TravelApp:
             f"Total Cost: ${total_cost:.2f}"
         )
         messagebox.showinfo("Travel Details", details)
-    # opens a new window to add a trip
-    def open_add_trip_window(self):
+
+    def open_add_trip_window(self): # Opens a new window to add a trip
+        if not self.auth.get_login_status():
+            messagebox.showerror("Access Denied", "Not admin user!")
+            return
+        
         self.add_trip_window = tk.Toplevel(self.root)
         self.add_trip_window.title("Add New Trip")
         self.add_trip_window.geometry("320x320")
@@ -361,6 +442,7 @@ class TravelApp:
 
         self.display_travel_options(self.filtered_data)
 
+
     def confirm_remove_trip(self):
         trip_id_to_remove = self.trip_id_to_remove_entry.get()
 
@@ -408,20 +490,12 @@ class TravelApp:
             self.filtered_data = [x for x in self.filtered_data if str(x["Favorite"]) == "1"]
         self.display_travel_options(self.filtered_data)
 
-    def toggle_favorite(self, trip_id, button):
-        # Get current favorite status from button appearance
-        current_status = button.cget("text") == "★"
-    
-        # Toggle in data manager (pass the opposite of current status)
-        new_status = not current_status
-        success = self.data_manager.toggle_favorite(trip_id, new_status)
-    
-        if success:
-            # Update button appearance
-            button.config(
-                text="★" if new_status else "☆",
-                fg="gold" if new_status else "black"
-            )
+    def toggle_favorite(self, trip_id, container):
+        current_btn = container.winfo_children()[0]
+        is_fav = current_btn.cget("text") == "★"
+        new_status = not is_fav
+        if self.data_manager.toggle_favorite(trip_id, new_status):
+            current_btn.config(text="★" if new_status else "☆", fg="gold" if new_status else "gray")
         
 
 
@@ -429,5 +503,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = TravelApp(root)
     root.mainloop()
-if __name__ == "__main__":
-    main()
