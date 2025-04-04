@@ -94,7 +94,8 @@ Functional testing based purely on inputs/outputs, from the user’s perspective
 #### Bugs: 
 1. Sort not working after adding favourites 
 2. the date validation wasnt enough as it could bypassed by enter not real dates 
-3. Did not change the favourite when clicking it 
+3. Did not change the favourite when clicking it
+4. Date format was not consistent with date format showing 
 
 ## 👥 Roles for Box Testing
 
