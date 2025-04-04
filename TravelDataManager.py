@@ -109,14 +109,6 @@ class TravelDataManager:
         except ValueError:
             raise ValueError("Transportation cost must be a number.")
 
-        # Validate favorite
-        try:
-            favorite = int(favorite)
-            if favorite not in (0, 1):
-                raise ValueError
-        except ValueError:
-            raise ValueError("Favorite must be 0 or 1.")
-
         # Validate date format
         try:
             datetime.strptime(start_date, "%Y-%m-%d")
@@ -144,6 +136,6 @@ class TravelDataManager:
         if new_status not in (0, 1):
             raise ValueError("Favorite status must be 0 or 1.")
 
-        data.loc[index, "Favorite"] = new_status
+        data.loc[index, "Favorite"] = 1 if new_status else 0
         self.save(data)
-        return True
+        return "1"

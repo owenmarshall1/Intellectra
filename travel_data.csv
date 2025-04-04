@@ -1,8 +1,8 @@
 Trip ID,City,Country,Start date,End date,Duration (days),Accommodation type,Accommodation cost,Transportation type,Transportation cost,Favorite
-1,London,UK,5/1/2025,5/8/2025,7,Hotel,1500.0,Flight,800.0,True
-2,Phuket,Thailand,6/15/2025,6/20/2025,5,Resort,900.0,Flight,1000.0,True
-3,Bali,Indonesia,7/1/2025,7/8/2025,7,Villa,1200.0,Flight,1100.0,True
-4,New York,USA,8/15/2025,8/29/2025,14,Hotel,2500.0,Flight,1200.0,True
+1,London,UK,5/1/2025,5/8/2025,7,Hotel,1500.0,Flight,800.0,1
+2,Phuket,Thailand,6/15/2025,6/20/2025,5,Resort,900.0,Flight,1000.0,1
+3,Bali,Indonesia,7/1/2025,7/8/2025,7,Villa,1200.0,Flight,1100.0,1
+4,New York,USA,8/15/2025,8/29/2025,14,Hotel,2500.0,Flight,1200.0,1
 5,Tokyo,Japan,9/10/2025,9/17/2025,7,Airbnb,900.0,Train,300.0,0
 6,Paris,France,10/5/2025,10/10/2025,5,Hotel,1800.0,Flight,1000.0,0
 7,Sydney,Australia,11/20/2025,11/30/2025,10,Hostel,600.0,Flight,1500.0,0
