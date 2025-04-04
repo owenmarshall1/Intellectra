@@ -344,7 +344,7 @@ class TravelApp:
         submit_button.grid(row=13, column=0, columnspan=2, pady=10)
 
     def submit_edited_trip(self, trip_id):
-        #get all field values 
+        #get all field values na
         city = self.entries["City:"].get()
         country = self.entries["Country:"].get()
         start_date = self.entries["Start Date (YYYY-MM-DD):"].get()
@@ -362,27 +362,32 @@ class TravelApp:
             return
 
         #save changes
-        self.data_manager.edit_trip(
-            trip_id=trip_id,
-            city=city,
-            country=country,
-            start_date=start_date,
-            end_date=end_date,
-            duration=int(duration),
-            accommodation_type=accommodation_type,
-            accommodation_cost=float(accommodation_cost),
-            transportation_type=transportation_type,
-            transportation_cost=float(transportation_cost)
-        )
-        messagebox.showinfo("Success", "Trip edited successfully!")
-        # close window and refresh data
-        self.edit_trip_window.destroy()
+        try:  
+            self.data_manager.edit_trip(
+                trip_id=trip_id,
+                city=city,
+                country=country,
+                start_date=start_date,
+                end_date=end_date,
+                duration=duration,
+                accommodation_type=accommodation_type,
+                accommodation_cost=accommodation_cost,
+                transportation_type=transportation_type,
+                transportation_cost=transportation_cost
+            )
+            messagebox.showinfo("Success", "Trip edited successfully!")
+            # close window and refresh data
+            self.edit_trip_window.destroy()
 
-        self.travel_data = self.data_manager.load_travel_data().to_dict("records")
-        self.filtered_data = self.travel_data
+            self.travel_data = self.data_manager.load_travel_data().to_dict("records")
+            self.filtered_data = self.travel_data
 
-        self.display_travel_options(self.filtered_data)
-
+            self.display_travel_options(self.filtered_data)
+        #handling errors 
+        except ValueError as e:
+            messagebox.showerror("Input Error", str(e))
+        except Exception as e:
+             messagebox.showerror("Error", f"Something went wrong:\n{e}")
 
     def submit_new_trip(self):
         #get all field values
@@ -403,26 +408,34 @@ class TravelApp:
             return
         
         #add new trip
-        self.data_manager.add_trip(
-            city=city,
-            country=country,
-            start_date=start_date,
-            end_date=end_date,
-            duration=int(duration),
-            accommodation_type=accommodation_type,
-            accommodation_cost=float(accommodation_cost),
-            transportation_type=transportation_type,
-            transportation_cost=float(transportation_cost)
-        )
-        messagebox.showinfo("Success", "Trip added successfully!")
+    
+    
+        try:
+            self.data_manager.add_trip(
+                city=city,
+                country=country,
+                start_date=start_date,
+                end_date=end_date,
+                duration=duration,
+                accommodation_type=accommodation_type,
+                accommodation_cost=accommodation_cost,
+                transportation_type=transportation_type,
+                transportation_cost=transportation_cost
+            )
+            messagebox.showinfo("Success", "Trip added successfully!")
+            self.add_trip_window.destroy()
 
-        #close window and refresh data
-        self.add_trip_window.destroy()
-
-        self.travel_data = self.data_manager.load_travel_data().to_dict("records")
-        self.filtered_data = self.travel_data
-
-        self.display_travel_options(self.filtered_data)
+            self.travel_data = self.data_manager.load_travel_data().to_dict("records")
+            self.filtered_data = self.travel_data
+            self.display_travel_options(self.filtered_data)
+        
+        #handle error messages
+        except ValueError as e:
+            messagebox.showerror("Input Error", str(e))
+        except Exception as e:
+            messagebox.showerror("Error", f"Something went wrong:\n{e}")
+        
+        
 
     def sort_data(self):
         # Sort the data based on the total cost (Accommodation + Transportation)
