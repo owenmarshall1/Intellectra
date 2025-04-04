@@ -49,3 +49,4 @@ Trip ID,City,Country,Start date,End date,Duration (days),Accommodation type,Acco
 48,Vancouver,Canada,7/10/2025,7/17/2025,7,Hostel,500.0,Train,250.0,0
 49,Amsterdam,Netherlands,6/20/2025,6/28/2025,8,Hotel,1300.0,Flight,900.0,0
 50,Paris,France,8/15/2025,8/22/2025,7,Hotel,1400.0,Train,400.0,0
+51,Tehran,Iran,2012-12-04,2025-12-09,123,Hotel,200.0,Flight,2000.0,0
