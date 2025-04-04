@@ -6,24 +6,24 @@ from AdminAuth import AdminAuth #Importing admin functions
 
 class TravelApp:
     def __init__(self, root):
-        self.auth = AdminAuth()
+        self.auth = AdminAuth() #admin handler
         self.root = root
         self.root.title("🌍 Travel Agent Portal")
         self.root.geometry("800x600")
         self.root.configure(bg="white")
-        self.data_manager = TravelDataManager()
+        self.data_manager = TravelDataManager() #data manager
         self.style = ttk.Style()
         self.setup_styles()
-
         try:
+            #try loading data from csv file
             self.travel_data = self.data_manager.load_travel_data().to_dict("records")
         except FileNotFoundError as e:
             messagebox.showerror("File Error", str(e))
             root.destroy()
             return
 
-        self.filtered_data = self.travel_data
-        self.search_debounce_id = None
+        self.filtered_data = self.travel_data #filtered data
+        self.search_debounce_id = None #debounce to reduce lag when searching
 
         self.create_widgets()
 
@@ -59,6 +59,7 @@ class TravelApp:
         self.search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
         self.search_entry.bind("<KeyRelease>", self.update_search)
 
+        #sort dropdown options
         self.sort_options = [
             "ID", "Price: Low to High", "Price: High to Low",
             "Country", "City", "Duration: Short to Long", "Duration: Long to Short", "Favorites"
@@ -70,9 +71,11 @@ class TravelApp:
         self.sort_dropdown.set("Sort by...")
         self.sort_dropdown.bind("<<ComboboxSelected>>", self.sort_data)
 
-        login_btn = ttk.Button(search_frame, text="Login", style="Login.TButton", command=self.show_login_popup)
-        login_btn.pack(side=tk.RIGHT, padx=10)
+        #login button
+        self.login_btn = ttk.Button(search_frame, text="Login", style="Login.TButton", command=self.show_login_popup)
+        self.login_btn.pack(side=tk.RIGHT, padx=10)
 
+        #scrollable canvas
         self.canvas = tk.Canvas(self.root, bg="white", highlightthickness=0)
         self.scrollbar = ttk.Scrollbar(self.root, orient="vertical", command=self.canvas.yview)
         self.scrollable_frame = ttk.Frame(self.canvas)
@@ -86,37 +89,42 @@ class TravelApp:
         self.canvas.pack(side="left", fill="both", expand=True)
         self.scrollbar.pack(side="right", fill="y")
 
+        #bottom button frame
         button_frame = ttk.Frame(self.root)
         button_frame.pack(side="bottom", pady=8)
 
-        add_trip_button = ttk.Button(button_frame, text="➕ Add New Trip", style="Accent.TButton", command=self.open_add_trip_window)
-        add_trip_button.pack(side="right", padx=12)
+        self.add_trip_button = ttk.Button(button_frame, text="➕ Add New Trip", style="Accent.TButton", command=self.open_add_trip_window)
+        self.add_trip_button.pack(side="right", padx=12)
+        if not self.auth.get_login_status():
+            self.add_trip_button.pack_forget()
 
         self.display_travel_options(self.filtered_data)
 
     def show_login_popup(self):
-        
+        #show login popup or log out if already logged in
         if self.auth.get_login_status():
             self.auth.logout()
             self.update_ui_for_admin_status()
             messagebox.showinfo("Logged Out!", "Admin mode has been deactivated")
             return
-        
+
+        #create the pop up        
         self.login_popup = tk.Toplevel(self.root)
         self.login_popup.title("Admin Login")
         self.login_popup.geometry("300x200")
         self.login_popup.resizable(False, False)
-        
-        window_width = 300 # Center the popup
-        window_height = 200 # Center the popup
+
+        #center the pop up
+        window_width = 300 
+        window_height = 200 
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
         x = (screen_width // 2) - (window_width // 2)
         y = (screen_height // 2) - (window_height // 2)
         self.login_popup.geometry(f"{window_width}x{window_height}+{x}+{y}")
         
-        
-        ttk.Label(self.login_popup, text="Enter Admin Password:").pack(pady=(10, 0)) # Password label and entry
+        #password label and entry
+        ttk.Label(self.login_popup, text="Enter Admin Password:").pack(pady=(10, 0))
         
         self.password_frame = ttk.Frame(self.login_popup)
         self.password_frame.pack(pady=5)
@@ -154,14 +162,17 @@ class TravelApp:
 
     def update_ui_for_admin_status(self):
         is_admin = self.auth.get_login_status()
-        self.display_travel_options(self.filtered_data)
+
+        self.login_btn.config(text="Logout" if is_admin else "Login")
         
         # Show/hide "Add New Trip" button (might remove this in the future)
-        for widget in self.root.winfo_children():
-            if isinstance(widget, ttk.Frame):
-                for child in widget.winfo_children():
-                    if isinstance(child, ttk.Button) and "Add New Trip" in child['text']:
-                        child.pack() if is_admin else child.pack_forget()
+        if hasattr(self, 'add_trip_button'):
+            if is_admin:
+               self.add_trip_button.pack(side="right", padx=12)
+            else:
+               self.add_trip_button.pack_forget()
+
+        self.display_travel_options(self.filtered_data)
 
     def debounce_search(self, event=None):
         if self.search_debounce_id:
@@ -180,21 +191,27 @@ class TravelApp:
         self.display_travel_options(self.filtered_data)
 
     def display_travel_options(self, data):
+        #clear exisiting widgets
         for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
+        #create a card for each trip in data
         for idx, item in enumerate(data):
             self.display_travel_option(idx, item)
 
     def display_travel_option(self, idx, item):
+        #outer frame
         outer = tk.Frame(self.scrollable_frame, bg="white")
         outer.pack(fill=tk.X, padx=8, pady=6)
 
+        #card frame
         card = tk.Frame(outer, bg="white", bd=1, relief="solid")
         card.pack(fill=tk.X, ipadx=6, ipady=6)
 
+        #left side of card
         left = ttk.Frame(card)
         left.pack(side="left", padx=10)
 
+        #format trip details
         details = f"{item['City']}, {item['Country']}\n"
         details += f"Duration: {item['Duration (days)']} days\n"
         total_cost = float(item['Accommodation cost']) + float(item['Transportation cost'])
@@ -242,7 +259,8 @@ class TravelApp:
         if item is None:
             messagebox.showerror("Error", "Trip not found!")
             return
-
+        
+        #calculate total cost of trip
         total_cost = float(item.get("Accommodation cost", 0)) + float(item.get("Transportation cost", 0))
 
         details = (
@@ -262,47 +280,26 @@ class TravelApp:
         if not self.auth.get_login_status():
             messagebox.showerror("Access Denied", "Not admin user!")
             return
-        
         self.add_trip_window = tk.Toplevel(self.root)
         self.add_trip_window.title("Add New Trip")
         self.add_trip_window.geometry("320x320")
 
-        ttk.Label(self.add_trip_window, text="City:").grid(row=1, column=0, padx=10, pady=5)
-        self.city_entry = ttk.Entry(self.add_trip_window)
-        self.city_entry.grid(row=1, column=1, padx=10, pady=5)
+        #creates fields for add new trip form
+        fields = [
+            ("City:", 1), ("Country:", 2), ("Start Date (YYYY-MM-DD):", 3),
+            ("End Date (YYYY-MM-DD):", 4), ("Duration (days):", 5),
+            ("Accommodation Type:", 6), ("Accommodation Cost:", 7),
+            ("Transportation Type:", 8), ("Transportation Cost:", 9)
+        ]
 
-        ttk.Label(self.add_trip_window, text="Country:").grid(row=2, column=0, padx=10, pady=5)
-        self.country_entry = ttk.Entry(self.add_trip_window)
-        self.country_entry.grid(row=2, column=1, padx=10, pady=5)
+        self.entries = {}
+        for label_text, row in fields:
+            ttk.Label(self.add_trip_window, text=label_text).grid(row=row, column=0, padx=10, pady=5)
+            entry = ttk.Entry(self.add_trip_window)
+            entry.grid(row=row, column=1, padx=10, pady=5)
+            self.entries[label_text] = entry
 
-        ttk.Label(self.add_trip_window, text="Start Date (YYYY-MM-DD):").grid(row=3, column=0, padx=10, pady=5)
-        self.start_date_entry = ttk.Entry(self.add_trip_window)
-        self.start_date_entry.grid(row=3, column=1, padx=10, pady=5)
-
-        ttk.Label(self.add_trip_window, text="End Date (YYYY-MM-DD):").grid(row=4, column=0, padx=10, pady=5)
-        self.end_date_entry = ttk.Entry(self.add_trip_window)
-        self.end_date_entry.grid(row=4, column=1, padx=10, pady=5)
-
-        ttk.Label(self.add_trip_window, text="Duration (days):").grid(row=5, column=0, padx=10, pady=5)
-        self.duration_entry = ttk.Entry(self.add_trip_window)
-        self.duration_entry.grid(row=5, column=1, padx=10, pady=5)
-
-        ttk.Label(self.add_trip_window, text="Accommodation Type:").grid(row=6, column=0, padx=10, pady=5)
-        self.accommodation_type_entry = ttk.Entry(self.add_trip_window)
-        self.accommodation_type_entry.grid(row=6, column=1, padx=10, pady=5)
-
-        ttk.Label(self.add_trip_window, text="Accommodation Cost:").grid(row=7, column=0, padx=10, pady=5)
-        self.accommodation_cost_entry = ttk.Entry(self.add_trip_window)
-        self.accommodation_cost_entry.grid(row=7, column=1, padx=10, pady=5)
-
-        ttk.Label(self.add_trip_window, text="Transportation Type:").grid(row=8, column=0, padx=10, pady=5)
-        self.transportation_type_entry = ttk.Entry(self.add_trip_window)
-        self.transportation_type_entry.grid(row=8, column=1, padx=10, pady=5)
-
-        ttk.Label(self.add_trip_window, text="Transportation Cost:").grid(row=9, column=0, padx=10, pady=5)
-        self.transportation_cost_entry = ttk.Entry(self.add_trip_window)
-        self.transportation_cost_entry.grid(row=9, column=1, padx=10, pady=5)
-
+        #submit button
         submit_button = ttk.Button(self.add_trip_window, text="Submit", command=self.submit_new_trip)
         submit_button.grid(row=10, column=0, columnspan=2, pady=10)
 
@@ -311,79 +308,60 @@ class TravelApp:
             messagebox.showerror("Access Denied", "Not admin user!")
             return
         
+        # Find the trip to edit
         item = next((trip for trip in self.travel_data if trip['Trip ID'] == trip_id), None)
         if item is None:
             messagebox.showerror("Error", "Trip not found!")
             return
 
         self.edit_trip_window = tk.Toplevel(self.root)
-        self.edit_trip_window.title("Edit Trip " + str(trip_id))
+        self.edit_trip_window.title(f"Edit Trip {trip_id}")
         self.edit_trip_window.geometry("320x320")
 
-        ttk.Label(self.edit_trip_window, text="City:").grid(row=1, column=0, padx=10, pady=5)
-        self.city_entry = ttk.Entry(self.edit_trip_window)
-        self.city_entry.grid(row=1, column=1, padx=10, pady=5)
-        self.city_entry.insert(0, item['City'])
+        # Create form fields with current values
+        fields = [
+            ("City:", 1, item['City']), ("Country:", 2, item['Country']),
+            ("Start Date (YYYY-MM-DD):", 3, item['Start date']),
+            ("End Date (YYYY-MM-DD):", 4, item['End date']),
+            ("Duration (days):", 5, item['Duration (days)']),
+            ("Accommodation Type:", 6, item['Accommodation type']),
+            ("Accommodation Cost:", 7, item['Accommodation cost']),
+            ("Transportation Type:", 8, item['Transportation type']),
+            ("Transportation Cost:", 9, item['Transportation cost'])
+        ]
 
-        ttk.Label(self.edit_trip_window, text="Country:").grid(row=2, column=0, padx=10, pady=5)
-        self.country_entry = ttk.Entry(self.edit_trip_window)
-        self.country_entry.grid(row=2, column=1, padx=10, pady=5)
-        self.country_entry.insert(0, item['Country'])
+        self.entries = {}
+        for label_text, row, value in fields:
+            ttk.Label(self.edit_trip_window, text=label_text).grid(row=row, column=0, padx=10, pady=5)
+            entry = ttk.Entry(self.edit_trip_window)
+            entry.grid(row=row, column=1, padx=10, pady=5)
+            entry.insert(0, value)
+            self.entries[label_text] = entry
 
-        ttk.Label(self.edit_trip_window, text="Start Date (YYYY-MM-DD):").grid(row=3, column=0, padx=10, pady=5)
-        self.start_date_entry = ttk.Entry(self.edit_trip_window)
-        self.start_date_entry.grid(row=3, column=1, padx=10, pady=5)
-        self.start_date_entry.insert(0, item['Start date'])
-
-        ttk.Label(self.edit_trip_window, text="End Date (YYYY-MM-DD):").grid(row=4, column=0, padx=10, pady=5)
-        self.end_date_entry = ttk.Entry(self.edit_trip_window)
-        self.end_date_entry.grid(row=4, column=1, padx=10, pady=5)
-        self.end_date_entry.insert(0, item['End date'])
-
-        ttk.Label(self.edit_trip_window, text="Duration (days):").grid(row=5, column=0, padx=10, pady=5)
-        self.duration_entry = ttk.Entry(self.edit_trip_window)
-        self.duration_entry.grid(row=5, column=1, padx=10, pady=5)
-        self.duration_entry.insert(0, item['Duration (days)'])
-
-        ttk.Label(self.edit_trip_window, text="Accommodation Type:").grid(row=6, column=0, padx=10, pady=5)
-        self.accommodation_type_entry = ttk.Entry(self.edit_trip_window)
-        self.accommodation_type_entry.grid(row=6, column=1, padx=10, pady=5)
-        self.accommodation_type_entry.insert(0, item['Accommodation type'])
-
-        ttk.Label(self.edit_trip_window, text="Accommodation Cost:").grid(row=7, column=0, padx=10, pady=5)
-        self.accommodation_cost_entry = ttk.Entry(self.edit_trip_window)
-        self.accommodation_cost_entry.grid(row=7, column=1, padx=10, pady=5)
-        self.accommodation_cost_entry.insert(0, item['Accommodation cost'])
-
-        ttk.Label(self.edit_trip_window, text="Transportation Type:").grid(row=8, column=0, padx=10, pady=5)
-        self.transportation_type_entry = ttk.Entry(self.edit_trip_window)
-        self.transportation_type_entry.grid(row=8, column=1, padx=10, pady=5)
-        self.transportation_type_entry.insert(0, item['Transportation type'])
-
-        ttk.Label(self.edit_trip_window, text="Transportation Cost:").grid(row=9, column=0, padx=10, pady=5)
-        self.transportation_cost_entry = ttk.Entry(self.edit_trip_window)
-        self.transportation_cost_entry.grid(row=9, column=1, padx=10, pady=5)
-        self.transportation_cost_entry.insert(0, item['Transportation cost'])
-
-        submit_button = ttk.Button(self.edit_trip_window, text="Submit", command=lambda: self.submit_edited_trip(trip_id))
+        # Submit button
+        submit_button = ttk.Button(self.edit_trip_window, text="Submit",
+                                 command=lambda: self.submit_edited_trip(trip_id))
         submit_button.grid(row=13, column=0, columnspan=2, pady=10)
 
     def submit_edited_trip(self, trip_id):
-        city = self.city_entry.get()
-        country = self.country_entry.get()
-        start_date = self.start_date_entry.get()
-        end_date = self.end_date_entry.get()
-        duration = self.duration_entry.get()
-        accommodation_type = self.accommodation_type_entry.get()
-        accommodation_cost = self.accommodation_cost_entry.get()
-        transportation_type = self.transportation_type_entry.get()
-        transportation_cost = self.transportation_cost_entry.get()
+        #get all field values 
+        city = self.entries["City:"].get()
+        country = self.entries["Country:"].get()
+        start_date = self.entries["Start Date (YYYY-MM-DD):"].get()
+        end_date = self.entries["End Date (YYYY-MM-DD):"].get()
+        duration = self.entries["Duration (days):"].get()
+        accommodation_type = self.entries["Accommodation Type:"].get()
+        accommodation_cost = self.entries["Accommodation Cost:"].get()
+        transportation_type = self.entries["Transportation Type:"].get()
+        transportation_cost = self.entries["Transportation Cost:"].get()
 
+        #check all fields are filled out
         if not all([city, country, start_date, end_date, duration,
                     accommodation_type, accommodation_cost, transportation_type, transportation_cost]):
             messagebox.showerror("Error", "All fields are required!")
             return
 
+        #save changes
         self.data_manager.edit_trip(
             trip_id=trip_id,
             city=city,
@@ -397,7 +375,7 @@ class TravelApp:
             transportation_cost=float(transportation_cost)
         )
         messagebox.showinfo("Success", "Trip edited successfully!")
-
+        # close window and refresh data
         self.edit_trip_window.destroy()
 
         self.travel_data = self.data_manager.load_travel_data().to_dict("records")
@@ -407,21 +385,24 @@ class TravelApp:
 
 
     def submit_new_trip(self):
-        city = self.city_entry.get()
-        country = self.country_entry.get()
-        start_date = self.start_date_entry.get()
-        end_date = self.end_date_entry.get()
-        duration = self.duration_entry.get()
-        accommodation_type = self.accommodation_type_entry.get()
-        accommodation_cost = self.accommodation_cost_entry.get()
-        transportation_type = self.transportation_type_entry.get()
-        transportation_cost = self.transportation_cost_entry.get()
+        #get all field values
+        city = self.entries["City:"].get()
+        country = self.entries["Country:"].get()
+        start_date = self.entries["Start Date (YYYY-MM-DD):"].get()
+        end_date = self.entries["End Date (YYYY-MM-DD):"].get()
+        duration = self.entries["Duration (days):"].get()
+        accommodation_type = self.entries["Accommodation Type:"].get()
+        accommodation_cost = self.entries["Accommodation Cost:"].get()
+        transportation_type = self.entries["Transportation Type:"].get()
+        transportation_cost = self.entries["Transportation Cost:"].get()
 
+        #make sure all fields are filled out
         if not all([city, country, start_date, end_date, duration,
                     accommodation_type, accommodation_cost, transportation_type, transportation_cost]):
             messagebox.showerror("Error", "All fields are required!")
             return
-
+        
+        #add new trip
         self.data_manager.add_trip(
             city=city,
             country=country,
@@ -435,33 +416,13 @@ class TravelApp:
         )
         messagebox.showinfo("Success", "Trip added successfully!")
 
+        #close window and refresh data
         self.add_trip_window.destroy()
 
         self.travel_data = self.data_manager.load_travel_data().to_dict("records")
         self.filtered_data = self.travel_data
 
         self.display_travel_options(self.filtered_data)
-
-
-    def confirm_remove_trip(self):
-        trip_id_to_remove = self.trip_id_to_remove_entry.get()
-
-        if not trip_id_to_remove:
-            messagebox.showerror("Error", "Please enter a Trip ID!")
-            return
-
-        confirm = messagebox.askyesno("Confirm", "Are you sure you want to delete this trip? (ID: " + str(trip_id_to_remove) + ")")
-        if confirm: 
-            self.data_manager.remove_trip(int(trip_id_to_remove))
-            
-            messagebox.showinfo("Success", "Trip removed successfully!")
-            
-            self.remove_trip_window.destroy()
-
-            self.travel_data = self.data_manager.load_travel_data().to_dict("records")
-            self.filtered_data = self.travel_data
-
-            self.display_travel_options(self.filtered_data)
 
     def sort_data(self):
         # Sort the data based on the total cost (Accommodation + Transportation)
@@ -472,6 +433,11 @@ class TravelApp:
     def sort_data(self, event=None):
 
         selected_option = self.sort_var.get()
+        #if favorites not selected dont show favorites
+        if selected_option != "Favorites":
+            self.filtered_data = self.travel_data.copy()
+
+        #apply sorting based on selected option
         if selected_option == "ID":
             self.filtered_data.sort(key=lambda x: x["Trip ID"])
         elif selected_option == "Price: Low to High":
@@ -494,8 +460,18 @@ class TravelApp:
         current_btn = container.winfo_children()[0]
         is_fav = current_btn.cget("text") == "★"
         new_status = not is_fav
+
+        #update favorite status in data manager
         if self.data_manager.toggle_favorite(trip_id, new_status):
             current_btn.config(text="★" if new_status else "☆", fg="gold" if new_status else "gray")
+
+        #update local data
+        for trip in self.travel_data:
+            if trip['Trip ID'] == trip_id:
+                trip['Favorite'] = 1 if new_status else 0
+        for trip in self.filtered_data:
+            if trip['Trip ID'] == trip_id:
+                trip['Favorite'] = 1 if new_status else 0
         
 
 
