@@ -50,10 +50,10 @@ class TravelDataManager:
 
         # Validate date format
         try:
-            datetime.strptime(start_date, "%m-%d-%Y")
-            datetime.strptime(end_date, "%m-%d-%Y")
+            datetime.strptime(start_date, "%m/%d/%Y")
+            datetime.strptime(end_date, "%m/%d/%Y")
         except ValueError:
-            raise ValueError("Dates must be in MM-DD-YYYY format.")
+            raise ValueError("Dates must be in MM/DD/YYYY format.")
 
         # Load and add trip
         data = self.load_travel_data()
@@ -111,10 +111,10 @@ class TravelDataManager:
 
         # Validate date format
         try:
-            datetime.strptime(start_date, "%Y-%m-%d")
-            datetime.strptime(end_date, "%Y-%m-%d")
+            datetime.strptime(start_date, "%m/%d/%y")
+            datetime.strptime(end_date, "%m/%d/%Y")
         except ValueError:
-            raise ValueError("Dates must be in MM-DD-YYYY format.")
+            raise ValueError("Dates must be in MM/DD/YYYY format.")
 
         data.loc[index, 'City'] = city
         data.loc[index, 'Country'] = country
