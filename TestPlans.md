@@ -14,7 +14,7 @@ Every Test should have two checks before it is dismissed
 5. `save()` – Saves DataFrame to CSV without altering or losing data.✅
 6. `update_search1()` – Filters data based on user input in the search bar.✅
 7. `add_trip()` adds trip witch correct id.✅
-8. `remove_trip()` handles a wrong id and doesnt change CSV.✅
+8. `remove_trip()` handles a wrong id and doesnt change CSV.✅a
 9. `edit_trip()` only updates matching Trip ID.✅
 10. `load_travel_data()` returns an empty DataFrame if CSV is empty.✅
 11. `save()` creates the file if it doesn’t exist.✅
@@ -64,8 +64,9 @@ Tests based on internal logic and code structure.
 5. Veryfing lambda function works correctly for sorting ✅ Arshia
 
 
-### Errors: 
-1. changing the input to int or float before try and except block so it wasnt handled properly 
+### Bugs: 
+1. changing the input to int or float before try and except block so it wasnt handled properly
+2. wanting to use favourite while not being defined 
 ---
 
 ### 🟨 Translucent Box Testing (Gray Box)
@@ -78,6 +79,8 @@ Tests combining knowledge of internal logic and external output, often technical
 3. Check file is not corrupted after multiple edits and saves. ✅ Tara
 ---
 
+### Bugs
+
 ### ⬛ Opaque Box Testing (Black Box)
 
 Functional testing based purely on inputs/outputs, from the user’s perspective.
@@ -89,9 +92,11 @@ Functional testing based purely on inputs/outputs, from the user’s perspective
 4. Invalid edit values ✅ Chris 
 5. Verify all buttons, labels, and layouts are consistent Check for visual defects and usability issues ✅ Chris
 ---
-#### Errors: 
+#### Bugs: 
 1. Sort not working after adding favourites 
 2. the date validation wasnt enough as it could bypassed by enter not real dates 
+3. Did not change the favourite when clicking it
+4. Date format was not consistent with date format showing 
 
 ## 👥 Roles for Box Testing
 
