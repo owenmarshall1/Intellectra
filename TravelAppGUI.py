@@ -286,8 +286,8 @@ class TravelApp:
 
         #creates fields for add new trip form
         fields = [
-            ("City:", 1), ("Country:", 2), ("Start Date (YYYY-MM-DD):", 3),
-            ("End Date (YYYY-MM-DD):", 4), ("Duration (days):", 5),
+            ("City:", 1), ("Country:", 2), ("Start Date (MM-DD-YYYY):", 3),
+            ("End Date (MM-DD-YYYY):", 4), ("Duration (days):", 5),
             ("Accommodation Type:", 6), ("Accommodation Cost:", 7),
             ("Transportation Type:", 8), ("Transportation Cost:", 9)
         ]
@@ -321,8 +321,8 @@ class TravelApp:
         # Create form fields with current values
         fields = [
             ("City:", 1, item['City']), ("Country:", 2, item['Country']),
-            ("Start Date (YYYY-MM-DD):", 3, item['Start date']),
-            ("End Date (YYYY-MM-DD):", 4, item['End date']),
+            ("Start Date (MM-DD-YYYY):", 3, item['Start date']),
+            ("End Date (MM-DD-YYYY):", 4, item['End date']),
             ("Duration (days):", 5, item['Duration (days)']),
             ("Accommodation Type:", 6, item['Accommodation type']),
             ("Accommodation Cost:", 7, item['Accommodation cost']),
@@ -347,8 +347,8 @@ class TravelApp:
         #get all field values na
         city = self.entries["City:"].get()
         country = self.entries["Country:"].get()
-        start_date = self.entries["Start Date (YYYY-MM-DD):"].get()
-        end_date = self.entries["End Date (YYYY-MM-DD):"].get()
+        start_date = self.entries["Start Date (MM-DD-YYYY):"].get()
+        end_date = self.entries["End Date (MM-DD-YYYY):"].get()
         duration = self.entries["Duration (days):"].get()
         accommodation_type = self.entries["Accommodation Type:"].get()
         accommodation_cost = self.entries["Accommodation Cost:"].get()
@@ -393,8 +393,8 @@ class TravelApp:
         #get all field values
         city = self.entries["City:"].get()
         country = self.entries["Country:"].get()
-        start_date = self.entries["Start Date (YYYY-MM-DD):"].get()
-        end_date = self.entries["End Date (YYYY-MM-DD):"].get()
+        start_date = self.entries["Start Date (MM-DD-YYYY):"].get()
+        end_date = self.entries["End Date (MM-DD-YYYY):"].get()
         duration = self.entries["Duration (days):"].get()
         accommodation_type = self.entries["Accommodation Type:"].get()
         accommodation_cost = self.entries["Accommodation Cost:"].get()
