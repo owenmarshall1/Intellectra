@@ -65,7 +65,8 @@ Tests based on internal logic and code structure.
 
 
 ### Bugs: 
-1. changing the input to int or float before try and except block so it wasnt handled properly 
+1. changing the input to int or float before try and except block so it wasnt handled properly
+2. wanting to use favourite while not being defined 
 ---
 
 ### 🟨 Translucent Box Testing (Gray Box)
