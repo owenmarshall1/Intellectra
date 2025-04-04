@@ -146,3 +146,4 @@ class TravelDataManager:
 
         data.loc[index, "Favorite"] = new_status
         self.save(data)
+        return True
