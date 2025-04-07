@@ -74,9 +74,9 @@ Tests based on internal logic and code structure.
 Tests combining knowledge of internal logic and external output, often technical.
 
 #### ✅ Planned Translucent Box Test Cases:
-1. Check CSV after adding/removing.  ✅ Tara
-2. Memory/resource handling on repeated `load_travel_data()` calls. ✅Tara
-3. Check file is not corrupted after multiple edits and saves. ✅ Tara
+1. Check CSV after adding/removing.  ✅ Arshia
+2. Memory/resource handling on repeated `load_travel_data()` calls. ✅ Arshia
+3. Check file is not corrupted after multiple edits and saves. ✅ Arshia
 ---
 
 ### Bugs

@@ -1,6 +1,6 @@
 from TravelDataManager import TravelDataManager
 
-# Initialize the manager
+
 manager = TravelDataManager("test_bulk_trips.csv")
 
 # Add 1000 trips
@@ -17,7 +17,7 @@ for i in range(1, 1001):
         transportation_type="Flight",
         transportation_cost="200.0"
     )
-print("✅ Added 1000 trips.")
+print(" Added 1000 trips.")
 
 # Load all trips to get their IDs
 data = manager.load_travel_data()
@@ -27,7 +27,7 @@ trip_ids = data["Trip ID"].tolist()
 print("Removing 1000 trips...")
 for tid in trip_ids:
     manager.remove_trip(tid)
-print("✅ Removed all trips.")
+print(" Removed all trips.")
 
 # Confirm empty
 data = manager.load_travel_data()
