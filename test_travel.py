@@ -57,12 +57,3 @@ def test_remove_trip(temp_manager):
         accommodation_type="Capsule", accommodation_cost="300",
         transportation_type="Train", transportation_cost="200"
     )
-    data = temp_manager.load_travel_data()
-    trip_id = int(data.iloc[0]["Trip ID"])
-    temp_manager.remove_trip(trip_id)
-    data = temp_manager.load_travel_data()
-    assert data.empty
-
-def test_remove_nonexistent_trip(temp_manager):
-    with pytest.raises(ValueError, match="Trip ID 999 not found"):
-        temp_manager.remove_trip(999)

@@ -111,7 +111,7 @@ class TravelDataManager:
 
         # Validate date format
         try:
-            datetime.strptime(start_date, "%m/%d/%y")
+            datetime.strptime(start_date, "%m/%d/%Y")
             datetime.strptime(end_date, "%m/%d/%Y")
         except ValueError:
             raise ValueError("Dates must be in MM/DD/YYYY format.")

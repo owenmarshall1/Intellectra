@@ -1,0 +1,34 @@
+from TravelDataManager import TravelDataManager
+
+# Initialize the manager
+manager = TravelDataManager("test_bulk_trips.csv")
+
+# Add 1000 trips
+print("Adding 1000 trips...")
+for i in range(1, 1001):
+    manager.add_trip(
+        city=f"City{i}",
+        country=f"Country{i}",
+        start_date="2025-01-01",
+        end_date="2025-01-10",
+        duration="9",
+        accommodation_type="Hotel",
+        accommodation_cost="100.0",
+        transportation_type="Flight",
+        transportation_cost="200.0"
+    )
+print("✅ Added 1000 trips.")
+
+# Load all trips to get their IDs
+data = manager.load_travel_data()
+trip_ids = data["Trip ID"].tolist()
+
+# Remove all 1000 trips
+print("Removing 1000 trips...")
+for tid in trip_ids:
+    manager.remove_trip(tid)
+print("✅ Removed all trips.")
+
+# Confirm empty
+data = manager.load_travel_data()
+print(f"Remaining trips: {len(data)}")
