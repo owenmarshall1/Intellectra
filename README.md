@@ -1,18 +1,19 @@
-# Travel Application - MVP Stage
+# Travel Application 
 
-This application is designed to help travel agent manage a large catalog of resorts, hotels, cruises and destinations effectively. It allows users to add, delete, edit, search and filter items based on countries, mode of transportation etc. It also includes an optional login system for admins and a "view-only' mode for normal users.
+This application helps travel agents manage a large catalog of resorts, hotels, cruises, and destinations. It allows users to add, delete, edit, search, and filter items based on country, transportation mode, and more. The system includes an admin login for catalog management and a view-only mode for general users.
 
 
 ## Table of Contents
-1. [MVP Demo Video](#mvp-demo-video)
+1. [Demo Video](#demo-video)
 2. [Features](#features)
-3. [Technologies Used](#technologies-used)
-4. [Installation](#installation)
-5. [Team Members](#team-members)
-6. [Resources](#resources)
+3. [Default Admin Password](#default-admin-password)
+4. [Technologies Used](#technologies-used)
+5. [Installation](#installation)
+6. [Team Members](#team-members)
+7. [Resources](#resources)
 
-## MVP Demo Video 
-Here is the link to the demo video of the MVP: [Link](https://drive.google.com/file/d/1ZWgEtSMm4h5hH63cWXkDrV23LbTu1iWy/view?usp=drive_link)
+## Demo Video 
+Here is the link to the demo video demonstrating functionality: [Link](https://drive.google.com/file/d/1AlpjpybvyDwzTeZ6shL5zMgJIcejUeU-/view?usp=sharing)
 
 ## Features 
 - **Display Items**: View resorts, hotels, cruise and destinations.
@@ -20,9 +21,13 @@ Here is the link to the demo video of the MVP: [Link](https://drive.google.com/f
 - **Edit Items**: Modify existing items in the catalog.
 - **Delete Items**: Remove items from the catalog.
 - **Search and Filter**: Search for items based on names. Filter items by country or transportation mode.
-- **Admin Login**: Optional login system for admins to modify and edit the catalog.
+- **Admin Login**: Login system for admins to modify and edit the catalog with default password.
 - **View-Only Mode**: A "view-only" versions of the app for users without login access.
-  
+
+## Default Admin Password
+**Password**: admin123 
+
+Note the password is case-sensitive
 
 ## Technologies Used
 - **Programming Language**: Python
@@ -67,5 +72,5 @@ To set up and run the Intellectra application locally, follow these steps:
 
 ## Resources
 
-* [Python Documetations](https://docs.python.org/3/)
+* [Python Documentation](https://docs.python.org/3/)
 
